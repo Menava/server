@@ -209,7 +209,8 @@ def get_itemprofit(option):
 		print(vouchers_schema.dump(vouchers_result))
 	if(option=='month'):
 		print('month in')
-		pass
+		vouchers_result=Vouchers.query.filter(Vouchers.date>getTodayDate() - getTimeWindow('month')).all()
+		print(vouchers_schema.dump(vouchers_result))
 	vouchers_result=db.session.query(Vouchers).all()
 	for voucher in vouchers_result:
 		voucher_total+=voucher.total
