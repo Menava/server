@@ -28,14 +28,17 @@ def create_service():
             cred.refresh(Request())
         else:
             return flask.redirect('authorize')
-
+        print("before pickle in")
         with open(pickle_file, 'wb') as token:
             pickle.dump(cred, token)
+            print("after pickle in")
 
     try:
         cred = google.oauth2.credentials.Credentials(
       **flask.session['credentials'])
+        print("before service in")
         service = build(API_NAME, API_VERSION, credentials=cred)
+        print("after service in")
         google_service=service
     except Exception as e:
         print('Unable to connect.')
@@ -55,6 +58,7 @@ def authorize():
       # Enable incremental authorization. Recommended as a best practice.
       include_granted_scopes='true')
   flask.session['state'] = state
+  print("auth in")
   return flask.redirect(authorization_url)
 
 
@@ -71,6 +75,7 @@ def oauth2callback():
 
   credentials = flow.credentials
   flask.session['credentials'] = credentials_to_dict(credentials)
+  print("oauth2 in")
   return flask.redirect(flask.url_for('google_route.create_service'))
 
 
