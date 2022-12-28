@@ -10,14 +10,12 @@ from .config import CLIENT_ID,CLIENT_SECRET,REDIRECT_URI,SCOPE,API_NAME,API_VERS
 temp_cred=None
 temp_state=None
 google_service=None
+pickle_file = f'token_{API_NAME}_{API_VERSION}.pickle'
 google_route = Blueprint('google_route', __name__)
 
 @google_route.route('/create_service')
 def create_service():
     cred = None
-
-    pickle_file = f'token_{API_NAME}_{API_VERSION}.pickle'
-    # print(pickle_file)
 
     if os.path.exists(pickle_file):
         with open(pickle_file, 'rb') as token:
