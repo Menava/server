@@ -24,18 +24,14 @@ def create_service():
             cred = pickle.load(token)
 
     if not cred or not cred.valid:
+        print("not cred in")
         if cred and cred.expired and cred.refresh_token:
             cred.refresh(Request())
         else:
             return flask.redirect('authorize')
         print("before pickle in")
-        with open(pickle_file, 'wb') as token:
-            pickle.dump(cred, token)
-            print("after pickle in")
 
     try:
-        cred = google.oauth2.credentials.Credentials(
-      **flask.session['credentials'])
         print("before service in")
         service = build(API_NAME, API_VERSION, credentials=cred)
         print("after service in")
@@ -75,6 +71,12 @@ def oauth2callback():
 
   credentials = flow.credentials
   flask.session['credentials'] = credentials_to_dict(credentials)
+
+  cred = google.oauth2.credentials.Credentials(
+      **flask.session['credentials'])
+  with open(pickle_file, 'wb') as token:
+            pickle.dump(cred, token)
+            print("after pickle in")
   print("oauth2 in")
   return flask.redirect(flask.url_for('google_route.create_service'))
 
