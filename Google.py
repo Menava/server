@@ -72,7 +72,7 @@ def oauth2callback():
   credentials = flow.credentials
   flask.session['credentials'] = credentials_to_dict(credentials)
 
-  cred = google.oauth2.credentials.Credentials(
+  cred = Credentials(
       **flask.session['credentials'])
   with open(pickle_file, 'wb') as token:
             pickle.dump(cred, token)
