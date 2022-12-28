@@ -15,6 +15,8 @@ folder_id='1b0z1BZrVuP2N-47_LD9uj_A37b-aCNOe'
 @googleService_route.route('/drive/createfolder/<value>')
 def create_folder(value):   
     print('test')
+    print(google_service)
+    print(value)
     file_metadata={
         'name':value,
         'mimeType':'application/vnd.google-apps.folder',
