@@ -1,0 +1,8 @@
+BEGIN;
+INSERT INTO car_frame (id, name) 
+    VALUES (NULL, 'Salon'), (NULL, 'Micro'), (NULL, 'Sedan'), (NULL, 'CUV'), (NULL, 'SUV'), (NULL, 'Mini Truck'), (NULL, 'Minivan');
+INSERT INTO damagetype (id, code, description) 
+    VALUES (NULL, 'A1', 'Small Scratch'), (NULL, 'A2', 'Scratch'), (NULL, 'A3', 'Big Scratch'), (NULL, 'E1', 'Few Dimples'), (NULL, 'E2', 'Several Dimples');
+INSERT INTO frame_components (id, frame_id, component) 
+    VALUES (NULL, '1', 'Back Mirror'), (NULL, '1', 'Front Mirror'), (NULL, '1', 'Right Mirror'), (NULL, '1', 'Left Mirror');
+COMMIT;

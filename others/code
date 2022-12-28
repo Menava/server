@@ -1,0 +1,52 @@
+from server.extensions import db
+from server import create_app
+from server.models.customer import *
+from server.models.customer_item import *
+from server.models.damageType import *
+from server.models.car import *
+from server.models.car_frame import *
+from server.frame_components import *
+from server.models.customer_car import *
+from server.models.service import *
+from server.models.service_place import *
+from server.models.servicePlace_employee import *
+from server.models.servicePlace_serviceitem import *
+from server.models.item import *
+from server.models.supplier import *
+from server.models.service_item import *
+from server.models.employee import *
+from server.models.voucher import *
+from server.models.voucher_employee import *
+from server.models.voucher_serviceitem import *
+from server.models.initial_checklist import *
+from server.models.init_checklist_image import *
+from server.models.final_checklist import *
+from server.models.final_checklist_image import *
+db.create_all(app=create_app())
+
+FLASK_APP=server
+FLASK_ENV=development
+
+pip install -r ./requirements.txt
+pip install --upgrade google-api-python-client google-auth-httplib2 google-auth-oauthlib
+
+#react requirment
+npm install react-redux
+npm install react-router-dom@6
+npm install @reduxjs/toolkit
+npm install sass
+npm install react-icons --save
+npm i js-cookie
+npm install --save react-signature-pad-wrapper
+npm i react-chartjs-2 chart.js
+npm install --save react-to-print
+npm i socket.io-client
+
+
+#Gcloud
+Deploy:
+$ gcloud app deploy --version dev
+Stop:
+$ gcloud app versions stop dev
+Start:
+$ gcloud app versions start dev

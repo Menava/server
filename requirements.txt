@@ -1,0 +1,13 @@
+Flask
+Flask-SQLAlchemy
+flask-marshmallow
+Flask-MySQLdb
+marshmallow-sqlalchemy
+Flask-Cors
+python-dotenv
+Flask-Session
+flask_socketio
+gunicorn
+google-api-python-client
+google-auth-httplib2
+google-auth-oauthlib
