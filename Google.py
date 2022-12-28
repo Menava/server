@@ -27,7 +27,7 @@ def create_service():
     try:
         service = build(API_NAME, API_VERSION, credentials=cred)
         flask.session['google_service']=service
-
+        
         return jsonify("Success")
     except Exception as e:
         print('Unable to connect.')
