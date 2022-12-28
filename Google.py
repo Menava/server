@@ -87,7 +87,7 @@ def revoke():
     return ('You need to <a href="/authorize">authorize</a> before ' +
             'testing the code to revoke credentials.')
 
-  credentials = google.oauth2.credentials.Credentials(
+  credentials = Credentials(
     **flask.session['credentials'])
 
   revoke = requests.post('https://oauth2.googleapis.com/revoke',
