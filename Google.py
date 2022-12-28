@@ -7,13 +7,10 @@ from googleapiclient.discovery import build
 
 from .config import CLIENT_ID,CLIENT_SECRET,REDIRECT_URI,SCOPE,API_NAME,API_VERSION,CLIENT_SECRET_FILE
 
-temp_cred=None
-temp_state=None
-google_service=None
 pickle_file = f'token_{API_NAME}_{API_VERSION}.pickle'
 google_route = Blueprint('google_route', __name__)
 
-@google_route.route('/create_service')
+@google_route.route('/')
 def create_service():
     cred = None
 
@@ -29,7 +26,7 @@ def create_service():
     
     try:
         service = build(API_NAME, API_VERSION, credentials=cred)
-        google_service=service
+        flask.session['google_service']=service
 
         return jsonify("Success")
     except Exception as e:

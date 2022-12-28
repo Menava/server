@@ -1,6 +1,6 @@
 from flask import jsonify, request, Blueprint,session
 from ..extensions import db,ma
-from ..Google import google_service
+
 from googleapiclient.http import MediaFileUpload
 import os,shutil
 
@@ -10,7 +10,7 @@ googleService_route = Blueprint('googleService_route', __name__)
 
 
 folder_id='1b0z1BZrVuP2N-47_LD9uj_A37b-aCNOe'
-
+google_service=flask.session['google_service']
 
 @googleService_route.route('/drive/createfolder/<value>')
 def create_folder(value):   
