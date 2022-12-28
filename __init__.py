@@ -2,7 +2,7 @@ from flask import Flask
 from flask_cors import CORS
 from .config import ApplicationConfig
 
-from .extensions import db
+from .extensions import db,ma
 
 from .models import *
 from .routes import *
