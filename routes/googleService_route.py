@@ -5,20 +5,25 @@ from googleapiclient.http import MediaFileUpload
 import os,shutil
 
 from ..config import imagePath
+from ..Google import google_service
 
 googleService_route = Blueprint('googleService_route', __name__)
 
 
 folder_id='1b0z1BZrVuP2N-47_LD9uj_A37b-aCNOe'
+google_service=session['google_service']
 
 @googleService_route.route('/drive/createfolder/<value>')
 def create_folder(value):   
+    print('test')
+    print(google_service)
+    print(value)
     file_metadata={
         'name':value,
         'mimeType':'application/vnd.google-apps.folder',
         'parents':[]
     }
-    session['google_service'].files().create(body=file_metadata).execute()
+    google_service.files().create(body=file_metadata).execute()
 
     return 'Test'
 
@@ -36,7 +41,7 @@ def add_image():
     }
     media=MediaFileUpload(os.path.join(imagePath,image.filename),mimetype='image/jpeg')
 
-    file_id=session['google_service'].files().create(
+    file_id=google_service.files().create(
         body=file_metadata,
         media_body=media,
         fields='id'
@@ -51,7 +56,7 @@ def insert_ToDrive(file_name,imagePath,folder_id):
     }
     media=MediaFileUpload(os.path.join(imagePath,file_name),mimetype='image/jpeg')
 
-    file_id=session['google_service'].files().create(
+    file_id=google_service.files().create(
         body=file_metadata,
         media_body=media,
         fields='id'
@@ -60,7 +65,7 @@ def insert_ToDrive(file_name,imagePath,folder_id):
     return file_id["id"]
 
 def delete_fileDrive(file_id):
-    session['google_service'].files().delete(fileId=file_id).execute()
+    google_service.files().delete(fileId=file_id).execute()
 
 @googleService_route.route('/drive/clearfolder')
 def clear_images():   
