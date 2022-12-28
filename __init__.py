@@ -58,6 +58,7 @@ def create_app():
 
     app.register_blueprint(generalpurchase_route)
     app.register_blueprint(googleService_route)
+    app.register_blueprint(google_route)
     app.register_blueprint(notification_route)
 
     return app 
