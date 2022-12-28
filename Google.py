@@ -13,7 +13,6 @@ google_route = Blueprint('google_route', __name__)
 @google_route.route('/')
 def create_service():
     cred = None
-    global google_service
     if os.path.exists(pickle_file):
         with open(pickle_file, 'rb') as token:
             cred = pickle.load(token)
@@ -26,8 +25,7 @@ def create_service():
     
     try:
         service = build(API_NAME, API_VERSION, credentials=cred)
-        google_service=service
-        return jsonify("Success")
+        return service
     except Exception as e:
         print('Unable to connect.')
         print(e)
