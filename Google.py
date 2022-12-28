@@ -34,9 +34,12 @@ def create_service():
         service = build(API_NAME, API_VERSION, credentials=cred)
         print("after service in")
         google_service=service
+
+        return jsonify("Success")
     except Exception as e:
         print('Unable to connect.')
         print(e)
+        return jsonify("fail")
 
 @google_route.route('/authorize')
 def authorize():
