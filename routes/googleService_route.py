@@ -11,7 +11,7 @@ googleService_route = Blueprint('googleService_route', __name__)
 
 
 folder_id='1b0z1BZrVuP2N-47_LD9uj_A37b-aCNOe'
-google_service= load_googleService()
+# google_service= load_googleService()
 
 @googleService_route.route('/drive/createfolder/<value>')
 def create_folder(value):   
