@@ -5,13 +5,13 @@ from googleapiclient.http import MediaFileUpload
 import os,shutil
 
 from ..config import imagePath
-from ..Google import create_service
+import Google
 
 googleService_route = Blueprint('googleService_route', __name__)
 
 
 folder_id='1b0z1BZrVuP2N-47_LD9uj_A37b-aCNOe'
-google_service=create_service()
+google_service=Google.service
 
 @googleService_route.route('/drive/createfolder/<value>')
 def create_folder(value):   
