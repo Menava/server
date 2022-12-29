@@ -5,7 +5,7 @@ from googleapiclient.http import MediaFileUpload
 import os,shutil
 
 from ..config import imagePath
-import ..Google
+from .. import Google
 
 googleService_route = Blueprint('googleService_route', __name__)
 
