@@ -115,6 +115,7 @@ item_array=[]
 
 @app_route.route('/login/<username>/<password>')
 def login(username,password):
+    print("log in in")
     employee = Employees.query.filter_by(username=username).one_or_none()
 
     if not employee or employee.password!=password:
