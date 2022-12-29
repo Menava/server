@@ -10,8 +10,6 @@ from .config import CLIENT_ID,CLIENT_SECRET,REDIRECT_URI,SCOPE,API_NAME,API_VERS
 pickle_file = f'token_{API_NAME}_{API_VERSION}.pickle'
 google_route = Blueprint('google_route', __name__)
 
-def load_googleService()
-
 @google_route.route('/')
 def create_service():
     cred = None
