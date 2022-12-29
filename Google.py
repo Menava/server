@@ -14,8 +14,11 @@ def load_googleService():
   if os.path.exists(pickle_file):
         with open(pickle_file, 'rb') as token:
             cred = pickle.load(token)
-  service = build(API_NAME, API_VERSION, credentials=cred)
-  return service
+  try:
+    service = build(API_NAME, API_VERSION, credentials=cred)
+    return service
+  except Exception as e:
+    return jsonify("fail")
 
 @google_route.route('/')
 def create_service():
