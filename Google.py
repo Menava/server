@@ -11,10 +11,11 @@ pickle_file = f'token_{API_NAME}_{API_VERSION}.pickle'
 google_route = Blueprint('google_route', __name__)
 
 def load_googleService():
+  service=None
   if os.path.exists(pickle_file):
         with open(pickle_file, 'rb') as token:
             cred = pickle.load(token)
-  service = build(API_NAME, API_VERSION, credentials=cred)
+            service = build(API_NAME, API_VERSION, credentials=cred)
   return service
 
 @google_route.route('/')
