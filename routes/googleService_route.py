@@ -11,13 +11,10 @@ googleService_route = Blueprint('googleService_route', __name__)
 
 
 folder_id='1b0z1BZrVuP2N-47_LD9uj_A37b-aCNOe'
-google_service= load_googleService()
 
 @googleService_route.route('/drive/createfolder/<value>')
-def create_folder(value):   
-    print('test')
-    print(google_service)
-    print(value)
+def create_folder(value):
+    google_service=load_googleService()
     file_metadata={
         'name':value,
         'mimeType':'application/vnd.google-apps.folder',
@@ -29,6 +26,7 @@ def create_folder(value):
 
 @googleService_route.route('/drive/image/add',methods=['POST'])
 def add_image():
+    google_service=load_googleService()
     files=request.files
     image = files.get('image_form')
     image.save(os.path.join(imagePath,image.filename))
@@ -50,6 +48,7 @@ def add_image():
     return 'test'
 
 def insert_ToDrive(file_name,imagePath,folder_id):
+    google_service=load_googleService()
     file_metadata={
         'name':file_name,
         'parents':[folder_id]        
@@ -65,6 +64,7 @@ def insert_ToDrive(file_name,imagePath,folder_id):
     return file_id["id"]
 
 def delete_fileDrive(file_id):
+    google_service=load_googleService()
     google_service.files().delete(fileId=file_id).execute()
 
 @googleService_route.route('/drive/clearfolder')
