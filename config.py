@@ -12,7 +12,7 @@ REDIRECT_URI = os.environ['REDIRECT_URI']
 SCOPE='https://www.googleapis.com/auth/drive'
 CLIENT_SECRET_FILE=r'/home/genshinimpact1234/mysite/server/token.json'
 API_NAME='drive'
-API_VERSION='v3'
+API_VERSION='v2'
 
 # service_folder="14goVz8uN-1xFF0SXU3hXfma5JP-ChpWg"
 # item_folder="1lJOhun8DjYi1MG1YbVaZwBQ_BoKhWowU"
