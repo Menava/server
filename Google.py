@@ -17,7 +17,7 @@ googleCred=Google_cred()
 @google_route.route('/getCred')
 def getCredd():
   google_cred=googleCred.get_cred()
-  print("get cred",googleCred_schema.dump(google_cred))
+  print("get cred",google_cred)
   return jsonify('test')
 
 def load_googleService():

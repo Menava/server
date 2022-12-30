@@ -38,7 +38,9 @@ class Google_cred(db.Model):
     @staticmethod
     def get_cred():
         google_cred = db.session.query(Google_cred).first()
-        return google_cred
+        schemeResult=googleCred_schema.dump(google_cred)
+        modifiedResult = schemeResult.pop('id')
+        return modifiedResult
 
 class GoogleCredSchema(ma.Schema):
     class Meta:
