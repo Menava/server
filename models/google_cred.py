@@ -11,7 +11,7 @@ class Google_cred(db.Model):
         self.state=state
     
     def add_cred(cred,state=None):
-        google_cred = db.session.query(Google_cred).one()
+        google_cred = db.session.query(Google_cred).first()
 
         if(google_cred==None):
             google_cred=Google_cred(temp_cred,temp_state)
