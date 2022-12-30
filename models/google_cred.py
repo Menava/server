@@ -22,6 +22,7 @@ class Google_cred(db.Model):
             google_cred.state=state
         db.session.commit()
     
+    @staticmethod
     def get_cred():
         google_cred = db.session.query(Google_cred).one()
         return google_cred
