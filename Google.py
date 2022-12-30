@@ -23,7 +23,7 @@ def load_googleService():
   service=None
   google_cred=googleCred.get_cred()
 
-  if google_cred!=None::
+  if google_cred!=None:
     credentials=Credentials(**google_cred)
   else:
     return flask.redirect('authorize')
