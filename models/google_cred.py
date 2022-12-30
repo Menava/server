@@ -37,6 +37,7 @@ class Google_cred(db.Model):
     
     @staticmethod
     def get_cred():
+        schemeResult=None
         google_cred = db.session.query(Google_cred).first()
         if(google_cred!=None):
             schemeResult=googleCred_schema.dump(google_cred)
