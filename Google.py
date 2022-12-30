@@ -19,7 +19,7 @@ def load_googleService():
   service=None
   if 'credentials' in flask.session:
     print("credentials in")
-    credentials=Credentials(**flask.session['credentials'])
+    credentials=Credentials(**google_cred.cred)
     print("credentails",credentials)
   else:
     return flask.redirect('authorize')
@@ -80,12 +80,14 @@ def oauth2callback():
 
 @google_route.route('/revoke')
 def revoke():
-  if 'credentials' not in flask.session:
+  google_cred=get_cred()
+
+  if google_cred.cred==None:
     return ('You need to <a href="/authorize">authorize</a> before ' +
             'testing the code to revoke credentials.')
 
   credentials = Credentials(
-    **flask.session['credentials'])
+    **google_cred.cred)
 
   revoke = requests.post('https://oauth2.googleapis.com/revoke',
       params={'token': credentials.token},
