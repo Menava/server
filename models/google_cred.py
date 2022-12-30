@@ -48,6 +48,8 @@ class Google_cred(db.Model):
     def get_cred():
         schemeResult=None
         google_cred = db.session.query(Google_cred).first()
+        new_scope=[google_cred.scopes]
+        google_cred.scopes=new_scope
         if(google_cred!=None):
             schemeResult=googleCred_schema.dump(google_cred)
             del schemeResult["id"]
