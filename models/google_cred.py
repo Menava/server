@@ -21,18 +21,21 @@ class Google_cred(db.Model):
     @staticmethod
     def add_cred(token=None,refresh_token=None,token_uri=None,client_id=None,client_secret=None,scopes=None):
         google_cred = db.session.query(Google_cred).first()
-
+        print("add cred in ",google_cred)
         if(google_cred==None):
+            print("if in")
             google_cred=Google_cred(token,refresh_token,token_uri,client_id,client_secret,scopes)
             db.session.add(google_cred)
 	        
         else:
+            print("else in")
             google_cred.token=token
             google_cred.refresh_token=refresh_token
             google_cred.token_uri=token_uri
             google_cred.client_id=client_id
             google_cred.client_secret=client_secret
             google_cred.scopes=scopes
+        print("google_cred in add",google_cred)
         db.session.commit()
     
     @staticmethod
