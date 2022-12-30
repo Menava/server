@@ -10,6 +10,7 @@ class Google_cred(db.Model):
         self.cred=cred
         self.state=state
     
+    @staticmethod
     def add_cred(cred,state=None):
         google_cred = db.session.query(Google_cred).first()
 
