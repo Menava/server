@@ -21,6 +21,7 @@ def getCredd():
   return jsonify('test')
 
 def load_googleService():
+  print("load in")
   service=None
   google_cred=googleCred.get_cred()
 
@@ -33,6 +34,7 @@ def load_googleService():
 
 @google_route.route('/')
 def create_service():
+  print("create in")
   google_cred=googleCred.get_cred()
 
   if google_cred==None:
@@ -46,6 +48,7 @@ def create_service():
 
 @google_route.route('/authorize')
 def authorize():
+  print("auth in")
   flow = google_auth_oauthlib.flow.Flow.from_client_secrets_file(
       CLIENT_SECRET_FILE, scopes=SCOPE)
 
