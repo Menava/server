@@ -139,7 +139,7 @@ def login(username,password):
 def reset_database(option):
     db.drop_all()
     db.create_all()
-    file=open(r"server\others\sample_data")
+    file=open(r"/home/genshinimpact1234/mysite/server/others/sample_data")
     sql = file.read()
     if(option=="withdata"):
         db.engine.execute(sql)
