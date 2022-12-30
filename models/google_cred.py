@@ -39,7 +39,7 @@ class Google_cred(db.Model):
     def get_cred():
         google_cred = db.session.query(Google_cred).first()
         schemeResult=googleCred_schema.dump(google_cred)
-        modifiedResult = schemeResult.pop('id')
+        modifiedResult = del schemeResult["id"]
         return modifiedResult
 
 class GoogleCredSchema(ma.Schema):
