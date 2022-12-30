@@ -18,7 +18,7 @@ googleCred=Google_cred()
 def getCredd():
   google_cred=googleCred.get_cred()
   print("get cred",google_cred)
-  return jsonify(google_cred)
+  return jsonify('test')
 
 def load_googleService():
   print("load google in")
