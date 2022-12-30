@@ -20,11 +20,7 @@ class Google_cred(db.Model):
     
     @staticmethod
     def add_cred(token=None,refresh_token=None,token_uri=None,client_id=None,client_secret=None,scopes=None):
-        print("scopes",scopes)
-        print("type of scope",type(scopes))
         modified_scope=scopes[0]
-        print("modified_scope",modified_scope)
-        print("modified_scope type",type(modified_scope))
 
         google_cred = db.session.query(Google_cred).first()
         print("add cred in ",google_cred)
@@ -36,7 +32,7 @@ class Google_cred(db.Model):
         else:
             print("else in")
             google_cred.token=token
-            google_cred.refresh_token=refresh_token
+            # google_cred.refresh_token=refresh_token
             google_cred.token_uri=token_uri
             google_cred.client_id=client_id
             google_cred.client_secret=client_secret
