@@ -39,7 +39,7 @@ def create_service():
 
   if google_cred==None:
     return flask.redirect('authorize')
-  credentials = google.oauth2.credentials.Credentials(
+  credentials =Credentials(
       **google_cred)
 
   googleCred.add_cred(credentials.token,credentials.refresh_token,credentials.token_uri,credentials.client_id,credentials.client_secret,credentials.scopes)
