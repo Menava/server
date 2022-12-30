@@ -10,10 +10,9 @@ from .config import CLIENT_ID,CLIENT_SECRET,REDIRECT_URI,SCOPE,API_NAME,API_VERS
 google_route = Blueprint('google_route', __name__)
 
 def load_googleService():
-   service=None
-   if 'credentials' in flask.session:
-    credentials = Credentials(
-      **flask.session['credentials'])
+  service=None
+  if 'credentials' in session:
+    credentials=Credentials(**session['credentials'])
   else:
     return flask.redirect('authorize')
   service = build(API_NAME, API_VERSION, credentials=cred)
