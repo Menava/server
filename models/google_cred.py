@@ -3,7 +3,7 @@ from ..extensions import db,ma
 class Google_cred(db.Model):
     __tablename__ = 'google_cred'
     id=db.Column(db.Integer,primary_key=True)
-    cred=db.Column(db.String(100))
+    cred=db.Column(db.String(200))
     state=db.Column(db.String(100))
 
     def __init__(self,cred=None,state=None):
