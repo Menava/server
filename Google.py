@@ -14,6 +14,12 @@ temp_state=None
 temp_cred=None
 googleCred=Google_cred()
 
+@google_route.route('/getCred')
+def getCredd():
+  google_cred=googleCred.get_cred()
+  print("get cred",google_cred)
+  return jsonify(google_cred)
+
 def load_googleService():
   print("load google in")
   print("flask session",flask.session)
@@ -72,9 +78,7 @@ def oauth2callback():
   flow.fetch_token(authorization_response=authorization_response)
 
   credentials = flow.credentials
-  print("to dict",credentials_to_dict(credentials))
-  
-  print("credentials for data",credentials)
+
   googleCred.add_cred(credentials.token,credentials.refresh_token,credentials.token_uri,credentials.client_id,credentials.client_secret,credentials.scopes)
 
   return flask.redirect(flask.url_for('google_route.create_service'))
