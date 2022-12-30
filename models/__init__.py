@@ -39,3 +39,4 @@ from.servicePlace_serviceitem import ServicePlaces_servicesitems
 
 from.general_purchase import General_Purchases
 from.notification import Notifications
+from .google_cred import Google_cred

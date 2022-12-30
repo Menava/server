@@ -4,10 +4,14 @@ from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import Flow,InstalledAppFlow
 from googleapiclient.discovery import build
+from .models.Google_cred import add_cred,get_cred
+from ..extensions import db
 
 from .config import CLIENT_ID,CLIENT_SECRET,REDIRECT_URI,SCOPE,API_NAME,API_VERSION,CLIENT_SECRET_FILE
 
 google_route = Blueprint('google_route', __name__)
+temp_state=None
+temp_cred=None
 
 def load_googleService():
   print("load google in")
@@ -25,16 +29,17 @@ def load_googleService():
 
 @google_route.route('/')
 def create_service():
-  if 'credentials' not in flask.session:
+  google_cred=get_cred()
+
+  if google_cred.cred==None:
     return flask.redirect('authorize')
   
-  credentials = Credentials(
-      **flask.session['credentials'])
+  credentials = Credentials(**google_cred.cred)
 
   service = build(
       API_NAME, API_VERSION, credentials=credentials)
 
-  flask.session['credentials'] = credentials_to_dict(credentials)
+  add_cred(credentials_to_dict(credentials))
     
   return jsonify("Google authentication success")
 
@@ -51,15 +56,14 @@ def authorize():
       access_type='offline',
       # Enable incremental authorization. Recommended as a best practice.
       include_granted_scopes='true')
-  flask.session['state'] = state
+  temp_state=state
   return flask.redirect(authorization_url)
 
 
 @google_route.route('/oauth2callback')
 def oauth2callback():
-  state = flask.session['state']
   flow = google_auth_oauthlib.flow.Flow.from_client_secrets_file(
-      CLIENT_SECRET_FILE, scopes=SCOPE,state=state)
+      CLIENT_SECRET_FILE, scopes=SCOPE,state=temp_state)
 
   flow.redirect_uri = flask.url_for('google_route.oauth2callback', _external=True)
 
@@ -67,7 +71,9 @@ def oauth2callback():
   flow.fetch_token(authorization_response=authorization_response)
 
   credentials = flow.credentials
-  flask.session['credentials'] = credentials_to_dict(credentials)
+  temp_cred = credentials_to_dict(credentials)
+  
+  add_cred(temp_cred,temp_state)
 
   return flask.redirect(flask.url_for('google_route.create_service'))
 
