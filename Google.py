@@ -83,7 +83,7 @@ def oauth2callback():
 def revoke():
   google_cred=googleCred.get_cred()
 
-  if google_cred.cred==None:
+  if google_cred==None:
     return ('You need to <a href="/authorize">authorize</a> before ' +
             'testing the code to revoke credentials.')
 
