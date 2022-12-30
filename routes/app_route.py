@@ -142,7 +142,7 @@ def reset_database(option):
     file=open(r"/home/genshinimpact1234/mysite/server/others/sample_data")
     sql = file.read()
     if(option=="withdata"):
-        db.engine.execute(sql)
+        db.engine.execute(sql,multi=True)
     
     return "reset"
 
