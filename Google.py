@@ -7,15 +7,16 @@ from googleapiclient.discovery import build
 
 from .config import CLIENT_ID,CLIENT_SECRET,REDIRECT_URI,SCOPE,API_NAME,API_VERSION,CLIENT_SECRET_FILE
 
-pickle_file = f'token_{API_NAME}_{API_VERSION}.pickle'
 google_route = Blueprint('google_route', __name__)
 
 def load_googleService():
   service=None
-  if os.path.exists(pickle_file):
-        with open(pickle_file, 'rb') as token:
-            cred = pickle.load(token)
-            service = build(API_NAME, API_VERSION, credentials=cred)
+   if 'credentials' in flask.session:
+    credentials = Credentials(
+      **flask.session['credentials'])
+  else:
+    return flask.redirect('authorize')
+  service = build(API_NAME, API_VERSION, credentials=cred)
   return service
 
 @google_route.route('/')
@@ -27,7 +28,7 @@ def create_service():
       **flask.session['credentials'])
 
   service = build(
-      API_SERVICE_NAME, API_VERSION, credentials=credentials)
+      API_NAME, API_VERSION, credentials=credentials)
 
   flask.session['credentials'] = credentials_to_dict(credentials)
     
