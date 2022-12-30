@@ -4,7 +4,8 @@ from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import Flow,InstalledAppFlow
 from googleapiclient.discovery import build
-from .models import Google_cred
+
+from .models.google_cred import Google_cred
 from Google_cred import  add_cred,get_cred
 from ..extensions import db
 
