@@ -21,13 +21,11 @@ def getCredd():
   return jsonify('test')
 
 def load_googleService():
-  print("load google in")
-  print("flask session",flask.session)
   service=None
-  if 'credentials' in flask.session:
-    print("credentials in")
+  google_cred=googleCred.get_cred()
+
+  if google_cred!=None::
     credentials=Credentials(**google_cred.cred)
-    print("credentails",credentials)
   else:
     return flask.redirect('authorize')
   service = build(API_NAME, API_VERSION, credentials=cred)
@@ -37,7 +35,7 @@ def load_googleService():
 @google_route.route('/')
 def create_service():
   google_cred=googleCred.get_cred()
-  print("google cred at create",google_cred)
+
   if google_cred==None:
     return flask.redirect('authorize')
   
