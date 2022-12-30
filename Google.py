@@ -7,8 +7,6 @@ from googleapiclient.discovery import build
 
 from .models.google_cred import Google_cred
 
-from ..extensions import db
-
 from .config import CLIENT_ID,CLIENT_SECRET,REDIRECT_URI,SCOPE,API_NAME,API_VERSION,CLIENT_SECRET_FILE
 
 google_route = Blueprint('google_route', __name__)
