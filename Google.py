@@ -17,7 +17,6 @@ googleCred=Google_cred()
 @google_route.route('/getCred')
 def getCredd():
   google_cred=googleCred.get_cred()
-  print("get cred",google_cred)
   return jsonify('test')
 
 def load_googleService():
@@ -39,9 +38,6 @@ def create_service():
     return flask.redirect('authorize')
   
   credentials = Credentials(**google_cred)
-
-  service = build(
-      API_NAME, API_VERSION, credentials=credentials)
 
   googleCred.add_cred( googleCred.add_cred(credentials.token,credentials.refresh_token,credentials.token_uri,credentials.client_id,credentials.client_secret,credentials.scopes))
     
