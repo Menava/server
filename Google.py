@@ -32,17 +32,14 @@ def load_googleService():
   service = build(API_NAME, API_VERSION, credentials=credentials)
   return service
 
-@google_route.route('/test-google')
+@google_route.route('/')
 def create_service():
   print("create in")  
   google_cred=googleCred.get_cred()
 
   if google_cred==None:
     return flask.redirect('authorize')
-  credentials =Credentials(
-      **google_cred)
-
-  googleCred.add_cred(credentials.token,credentials.refresh_token,credentials.token_uri,credentials.client_id,credentials.client_secret,credentials.scopes)
+  
   return jsonify("Google authentication success")
 
 @google_route.route('/authorize')
