@@ -2,6 +2,7 @@ from ..extensions import db,ma
 
 class Google_cred(db.Model):
     __tablename__ = 'google_cred'
+    id=db.Column(db.Integer,primary_key=True)
     token=db.Column(db.String(100))
     refresh_token=db.Column(db.String(100))
     token_uri=db.Column(db.String(100))
