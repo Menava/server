@@ -11,9 +11,9 @@ google_route = Blueprint('google_route', __name__)
 
 def load_googleService():
   service=None
-  if 'credentials' in session:
+  if 'credentials' in flask.session:
     print("credentials in")
-    credentials=Credentials(**session['credentials'])
+    credentials=Credentials(**flask.session['credentials'])
     print("credentails",credentials)
   else:
     return flask.redirect('authorize')
