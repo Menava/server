@@ -35,7 +35,7 @@ class Google_cred(db.Model):
             google_cred.client_id=client_id
             google_cred.client_secret=client_secret
             google_cred.scopes=scopes
-        print("google_cred in add",google_cred)
+        print("google_cred in add",googleCred_schema.dump(google_cred))
         db.session.commit()
     
     @staticmethod
