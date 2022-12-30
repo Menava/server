@@ -31,7 +31,7 @@ def load_googleService():
 @google_route.route('/')
 def create_service():
   google_cred=googleCred.get_cred()
-
+  print("google cred at create",google_cred)
   if google_cred==None:
     return flask.redirect('authorize')
   
