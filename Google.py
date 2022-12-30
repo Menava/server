@@ -5,7 +5,7 @@ from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import Flow,InstalledAppFlow
 from googleapiclient.discovery import build
 
-from .models.google_cred import Google_cred
+from .models.google_cred import Google_cred,googleCred_schema
 
 from .config import CLIENT_ID,CLIENT_SECRET,REDIRECT_URI,SCOPE,API_NAME,API_VERSION,CLIENT_SECRET_FILE
 
@@ -17,7 +17,7 @@ googleCred=Google_cred()
 @google_route.route('/getCred')
 def getCredd():
   google_cred=googleCred.get_cred()
-  print("get cred",google_cred)
+  print("get cred",googleCred_schema.dump(google_cred))
   return jsonify('test')
 
 def load_googleService():
