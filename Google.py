@@ -72,6 +72,7 @@ def oauth2callback():
   flow.fetch_token(authorization_response=authorization_response)
 
   credentials = flow.credentials
+  print("to dict",credentials_to_dict(credentials))
   
   print("credentials for data",credentials)
   googleCred.add_cred(credentials.token,credentials.refresh_token,credentials.token_uri,credentials.client_id,credentials.client_secret,credentials.scopes)
