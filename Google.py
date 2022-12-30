@@ -10,6 +10,8 @@ from .config import CLIENT_ID,CLIENT_SECRET,REDIRECT_URI,SCOPE,API_NAME,API_VERS
 google_route = Blueprint('google_route', __name__)
 
 def load_googleService():
+  print("load google in")
+  print("flask session",flask.session)
   service=None
   if 'credentials' in flask.session:
     print("credentials in")
