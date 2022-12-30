@@ -40,7 +40,7 @@ def create_service():
   service = build(
       API_NAME, API_VERSION, credentials=credentials)
 
-  googleCred.add_cred(credentials)
+  googleCred.add_cred( googleCred.add_cred(credentials.token,credentials.refresh_token,credentials.token_uri,credentials.client_id,credentials.client_secret,credentials.scopes))
     
   return jsonify("Google authentication success")
 
@@ -72,9 +72,8 @@ def oauth2callback():
   flow.fetch_token(authorization_response=authorization_response)
 
   credentials = flow.credentials
-  temp_cred = credentials_to_dict(credentials)
   
-  googleCred.add_cred(credentials,temp_state)
+  googleCred.add_cred(credentials.token,credentials.refresh_token,credentials.token_uri,credentials.client_id,credentials.client_secret,credentials.scopes)
 
   return flask.redirect(flask.url_for('google_route.create_service'))
 
