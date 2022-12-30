@@ -6,7 +6,7 @@ from google_auth_oauthlib.flow import Flow,InstalledAppFlow
 from googleapiclient.discovery import build
 
 from .models.google_cred import Google_cred
-from Google_cred import  add_cred,get_cred
+
 from ..extensions import db
 
 from .config import CLIENT_ID,CLIENT_SECRET,REDIRECT_URI,SCOPE,API_NAME,API_VERSION,CLIENT_SECRET_FILE
@@ -14,6 +14,7 @@ from .config import CLIENT_ID,CLIENT_SECRET,REDIRECT_URI,SCOPE,API_NAME,API_VERS
 google_route = Blueprint('google_route', __name__)
 temp_state=None
 temp_cred=None
+googleCred=Google_cred()
 
 def load_googleService():
   print("load google in")
@@ -31,7 +32,7 @@ def load_googleService():
 
 @google_route.route('/')
 def create_service():
-  google_cred=get_cred()
+  google_cred=googleCred.get_cred()
 
   if google_cred.cred==None:
     return flask.redirect('authorize')
@@ -41,7 +42,7 @@ def create_service():
   service = build(
       API_NAME, API_VERSION, credentials=credentials)
 
-  add_cred(credentials_to_dict(credentials))
+  googleCred.add_cred(credentials_to_dict(credentials))
     
   return jsonify("Google authentication success")
 
@@ -75,14 +76,14 @@ def oauth2callback():
   credentials = flow.credentials
   temp_cred = credentials_to_dict(credentials)
   
-  add_cred(temp_cred,temp_state)
+  googleCred.add_cred(temp_cred,temp_state)
 
   return flask.redirect(flask.url_for('google_route.create_service'))
 
 
 @google_route.route('/revoke')
 def revoke():
-  google_cred=get_cred()
+  google_cred=googleCred.get_cred()
 
   if google_cred.cred==None:
     return ('You need to <a href="/authorize">authorize</a> before ' +
