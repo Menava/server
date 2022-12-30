@@ -72,7 +72,7 @@ def oauth2callback():
   flow.fetch_token(authorization_response=authorization_response)
 
   credentials = flow.credentials
-  print("credentials in auth",credentials)
+  print("credentials in auth",credentials_to_dict(credentials))
   googleCred.add_cred(credentials.token,credentials.refresh_token,credentials.token_uri,credentials.client_id,credentials.client_secret,credentials.scopes)
 
   return flask.redirect(flask.url_for('google_route.create_service'))
