@@ -38,8 +38,9 @@ class Google_cred(db.Model):
     @staticmethod
     def get_cred():
         google_cred = db.session.query(Google_cred).first()
-        schemeResult=googleCred_schema.dump(google_cred)
-        del schemeResult["id"]
+        if(google_cred!=None):
+            schemeResult=googleCred_schema.dump(google_cred)
+            del schemeResult["id"]
         return schemeResult
 
 class GoogleCredSchema(ma.Schema):
