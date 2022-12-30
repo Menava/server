@@ -119,6 +119,25 @@ def get_customervoucher(customerID):
 			voucher_array.append(voucher_result)
 	return jsonify(voucher_array)
 
+@voucher_route.route('/dashboard', methods=['GET'])
+def get_dashboard():
+	services_array=[]
+	total_sale=0
+	voucher_Date=date(year=int(2022),month=int(12),day=int(17))
+	query_vouchers=Vouchers.query.filter(Vouchers.date==voucher_Date).all()
+	for voucher_result in query_vouchers:
+		voucher=voucher_schema.dump(voucher_result)
+		voucher_details_result=db.session.query(Services_items,Services,Items).filter(Vouchers_servicesitems.voucher_id==voucher["id"]).join(Vouchers_servicesitems,Services).outerjoin(Items).all()
+		# print(voucher_details_result)
+		for voucher_detail_result,service,item in voucher_details_result:
+			voucher_detail=serviceItem_schema.dump(voucher_detail_result)
+			service_result=service_schema.dump(service)
+			item_result=item_schema.dump(item)
+			print(voucher_detail)
+			print(service_result,item_result)
+				# services_array.append(voucher_detail)
+	return jsonify('Test')
+
 @voucher_route.route('/voucher/sales/<day>/<month>/<year>/',methods=['GET'])
 def get_sales(day,month,year):
 	total_sale=0

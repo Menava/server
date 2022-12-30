@@ -20,25 +20,18 @@ def load_googleService():
 
 @google_route.route('/')
 def create_service():
-    cred = None
+  if 'credentials' not in flask.session:
+    return flask.redirect('authorize')
+  
+  credentials = Credentials(
+      **flask.session['credentials'])
 
-    if os.path.exists(pickle_file):
-        with open(pickle_file, 'rb') as token:
-            cred = pickle.load(token)
+  service = build(
+      API_SERVICE_NAME, API_VERSION, credentials=credentials)
 
-    if not cred or not cred.valid:
-        if cred and cred.expired and cred.refresh_token:
-            cred.refresh(Request())
-        else:
-            return flask.redirect('authorize')
+  flask.session['credentials'] = credentials_to_dict(credentials)
     
-    try:
-        service = build(API_NAME, API_VERSION, credentials=cred)
-        return jsonify("Success")
-    except Exception as e:
-        print('Unable to connect.')
-        print(e)
-        return jsonify("fail")
+  return jsonify("Google authentication success")
 
 @google_route.route('/authorize')
 def authorize():
@@ -70,11 +63,6 @@ def oauth2callback():
 
   credentials = flow.credentials
   flask.session['credentials'] = credentials_to_dict(credentials)
-
-  cred = Credentials(
-      **flask.session['credentials'])
-  with open(pickle_file, 'wb') as token:
-            pickle.dump(cred, token)
 
   return flask.redirect(flask.url_for('google_route.create_service'))
 
