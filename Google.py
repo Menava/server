@@ -41,7 +41,7 @@ def create_service():
   if google_cred==None:
     return flask.redirect('authorize')
   
-  credentials = Credentials(**google_cred.cred)
+  credentials = Credentials(**google_cred)
 
   service = build(
       API_NAME, API_VERSION, credentials=credentials)
@@ -93,7 +93,7 @@ def revoke():
             'testing the code to revoke credentials.')
 
   credentials = Credentials(
-    **google_cred.cred)
+    **google_cred)
 
   revoke = requests.post('https://oauth2.googleapis.com/revoke',
       params={'token': credentials.token},
