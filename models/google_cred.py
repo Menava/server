@@ -41,7 +41,7 @@ class Google_cred(db.Model):
 
 class GoogleCredSchema(ma.Schema):
     class Meta:
-        fields=('id','cred','state')
+        fields=('id','token','refresh_token','token_uri','client_id','client_secret','scopes')
 
 googleCred_schema=GoogleCredSchema()
 googleCreds_schema=GoogleCredSchema(many=True)
