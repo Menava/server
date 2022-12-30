@@ -20,6 +20,7 @@ class Google_cred(db.Model):
     
     @staticmethod
     def add_cred(token=None,refresh_token=None,token_uri=None,client_id=None,client_secret=None,scopes=None):
+        print("scopes",scopes)
         google_cred = db.session.query(Google_cred).first()
         print("add cred in ",google_cred)
         if(google_cred==None):
