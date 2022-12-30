@@ -6,7 +6,7 @@ class Google_cred(db.Model):
     cred=db.Column(db.String(100))
     state=db.Column(db.String(100))
 
-    def __init__(self,cred,state):
+    def __init__(self,cred=None,state=None):
         self.cred=cred
         self.state=state
     
