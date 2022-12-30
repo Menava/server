@@ -27,6 +27,7 @@ def create_folder(value):
 @googleService_route.route('/drive/image/add',methods=['POST'])
 def add_image():
     google_service=load_googleService()
+    print("service google",google_service)
     files=request.files
     image = files.get('image_form')
     image.save(os.path.join(imagePath,image.filename))
