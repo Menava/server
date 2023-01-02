@@ -61,7 +61,7 @@ def authorize():
 @google_route.route('/oauth2callback')
 def oauth2callback():
   print("oauth in")
-  state=temp_state
+  print("oauth temp_state",temp_state)
   print('callback state',state)
   flow = Flow.from_client_secrets_file(
       CLIENT_SECRET_FILE, scopes=SCOPE,state=state)
@@ -72,7 +72,7 @@ def oauth2callback():
   flow.fetch_token(authorization_response=authorization_response)
 
   credentials = flow.credentials
-  print('credentials',credentials)
+  print('credentials',credentials.token)
   print("credentials in auth",credentials_to_dict(credentials))
   googleCred.add_cred(credentials.token,credentials.refresh_token,credentials.token_uri,credentials.client_id,credentials.client_secret,credentials.scopes)
 
