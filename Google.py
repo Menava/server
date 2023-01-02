@@ -26,10 +26,13 @@ def load_googleService():
   print('google_cred',google_cred)
   if google_cred!=None:
     credentials=Credentials(**google_cred)
+    googleCred.add_cred(credentials.token,credentials.refresh_token,credentials.token_uri,credentials.client_id,credentials.client_secret,credentials.scopes)
     print(credentials_to_dict(credentials))
   else:
     return redirect('authorize')
   service = build(API_NAME, API_VERSION, credentials=credentials)
+  
+
   return service
 
 @google_route.route('/')
