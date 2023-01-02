@@ -61,7 +61,7 @@ def insert_ToDrive(file_name,imagePath,folder_id):
         media_body=media,
         fields='id'
     ).execute()
-    
+    print("here 1")
     return file_id["id"]
 
 def delete_fileDrive(file_id):

@@ -29,6 +29,7 @@ def post_details(id):
 
 @service_route.route('/service/add/',methods=['POST'])
 def add_service():
+	print("here 2")
 	try:
 		files=request.files
 		image = files.get('file')
