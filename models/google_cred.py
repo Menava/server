@@ -40,13 +40,14 @@ class Google_cred(db.Model):
     def get_cred():
         schemeResult=None
         google_cred = Google_cred.query.first()
-        
+
         if(google_cred!=None):
-            new_scope=[google_cred.scopes]
-            google_cred.scopes=new_scope
-            schemeResult=googleCred_schema.dump(google_cred)
+            temp_google=Google_cred(google_cred.token,google_cred.refresh_token,google_cred.token_uri,google_cred.client_id,google_cred.client_secret,google_cred.scopes)
+            new_scope=[temp_google.scopes]
+            temp_google.scopes=new_scope
+            schemeResult=googleCred_schema.dump(temp_google)
             del schemeResult["id"]
-        db.session.flush()
+    
         return schemeResult
 
 class GoogleCredSchema(ma.Schema):
