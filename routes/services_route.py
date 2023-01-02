@@ -29,40 +29,23 @@ def post_details(id):
 
 @service_route.route('/service/add/',methods=['POST'])
 def add_service():
-	print("here 2")
-	# try:
-	# 	files=request.files
-	# 	image = files.get('file')
-	# 	service_type = request.form.get('service_type')
-	# 	service_price = request.form.get('service_price')
-	# 	service_detail = request.form.get('service_detail')
-	# 	image.save(os.path.join(imagePath,image.filename))
+	try:
+		files=request.files
+		image = files.get('file')
+		service_type = request.form.get('service_type')
+		service_price = request.form.get('service_price')
+		service_detail = request.form.get('service_detail')
+		image.save(os.path.join(imagePath,image.filename))
 
-	# 	file_id=insert_ToDrive(image.filename,imagePath,folder_id)
-	# 	service=Services(service_type,image.filename,file_id,service_price,service_detail)
-	# 	db.session.add(service)
-	# 	db.session.commit()
-	# except Exception as e:
-	# 	print(e)
-	# 	return "something went wrong",500
-	# else:
-	# 	return service_schema.jsonify(service)
-
-	files=request.files
-	image = files.get('file')
-	service_type = request.form.get('service_type')
-	service_price = request.form.get('service_price')
-	service_detail = request.form.get('service_detail')
-	image.save(os.path.join(imagePath,image.filename))
-
-	file_id=insert_ToDrive(image.filename,imagePath,folder_id)
-	service=Services(service_type,image.filename,file_id,service_price,service_detail)
-	db.session.add(service)
-	print(db.session)
-	db.session.commit()
-
-	return service_schema.jsonify(service)
-
+		file_id=insert_ToDrive(image.filename,imagePath,folder_id)
+		service=Services(service_type,image.filename,file_id,service_price,service_detail)
+		db.session.add(service)
+		db.session.commit()
+	except Exception as e:
+		print(e)
+		return "something went wrong",500
+	else:
+		return service_schema.jsonify(service)
 
 @service_route.route('/service/update/<id>/',methods=['PUT'])
 def update_service(id):

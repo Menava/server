@@ -36,33 +36,54 @@ def post_details(id):
 
 @item_route.route('/item/add/',methods=['POST'])
 def add_item():
-	try:
-		files=request.files
-		image = files.get('file')
-		name=request.form.get('name')
-		quantity=request.form.get('quantity')
-		price=request.form.get('price')
-		refundable=request.form.get('refundable')
-		supplier_id=request.form.get('supplier_id')
-		image.save(os.path.join(imagePath,image.filename))
+	# try:
+	# 	files=request.files
+	# 	image = files.get('file')
+	# 	name=request.form.get('name')
+	# 	quantity=request.form.get('quantity')
+	# 	price=request.form.get('price')
+	# 	refundable=request.form.get('refundable')
+	# 	supplier_id=request.form.get('supplier_id')
+	# 	image.save(os.path.join(imagePath,image.filename))
 
-		file_id=insert_ToDrive(image.filename,imagePath,folder_id)
+	# 	file_id=insert_ToDrive(image.filename,imagePath,folder_id)
 
-		if refundable=='true':
-			refundable=True
-		else:
-			refundable=False
+	# 	if refundable=='true':
+	# 		refundable=True
+	# 	else:
+	# 		refundable=False
 
-		item=Items(name,quantity,price,image.filename,file_id,refundable,supplier_id)
-		db.session.add(item)
-		db.session.commit()
-	except Exception as e:
-		print(e)
-		return 'something went wrong',500
+	# 	item=Items(name,quantity,price,image.filename,file_id,refundable,supplier_id)
+	# 	db.session.add(item)
+	# 	db.session.commit()
+	# except Exception as e:
+	# 	print(e)
+	# 	return 'something went wrong',500
+	# else:
+	# 	return item_schema.jsonify(item)
+
+	files=request.files
+	image = files.get('file')
+	name=request.form.get('name')
+	quantity=request.form.get('quantity')
+	price=request.form.get('price')
+	refundable=request.form.get('refundable')
+	supplier_id=request.form.get('supplier_id')
+	image.save(os.path.join(imagePath,image.filename))
+
+	file_id=insert_ToDrive(image.filename,imagePath,folder_id)
+
+	if refundable=='true':
+		refundable=True
 	else:
-		return item_schema.jsonify(item)
+		refundable=False
 
+	item=Items(name,quantity,price,image.filename,file_id,refundable,supplier_id)
+	db.session.add(item)
+	db.session.commit()
 
+	return item_schema.jsonify(item)
+	
 @item_route.route('/item/update/<id>/',methods=['PUT'])
 def update_item(id):
 	item=Items.query.get(id)
