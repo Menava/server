@@ -46,7 +46,7 @@ class Google_cred(db.Model):
             google_cred.scopes=new_scope
             schemeResult=googleCred_schema.dump(google_cred)
             del schemeResult["id"]
-        db.session.delete(google_cred)
+        db.session.flush()
         return schemeResult
 
 class GoogleCredSchema(ma.Schema):
