@@ -33,10 +33,6 @@ class Google_cred(db.Model):
             print("else in")
             google_cred.token=token
             # google_cred.refresh_token=refresh_token
-            google_cred.token_uri=token_uri
-            google_cred.client_id=client_id
-            google_cred.client_secret=client_secret
-            google_cred.scopes=modified_scope
         print("google_cred in add",googleCred_schema.dump(google_cred))
         db.session.commit()
     
