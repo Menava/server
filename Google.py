@@ -54,7 +54,7 @@ def authorize():
       access_type='offline',
       include_granted_scopes='true')
   temp_state=state
-  print('auth state',temp_state)
+
   return redirect(authorization_url)
 
 
@@ -62,7 +62,6 @@ def authorize():
 def oauth2callback():
   global temp_state
   print("oauth in")
-  print('callback state',temp_state)
   flow = Flow.from_client_secrets_file(
       CLIENT_SECRET_FILE, scopes=SCOPE,state=temp_state)
 

@@ -3,12 +3,12 @@ from ..extensions import db,ma
 class Google_cred(db.Model):
     __tablename__ = 'google_cred'
     id=db.Column(db.Integer,primary_key=True)
-    token=db.Column(db.String(100))
-    refresh_token=db.Column(db.String(100))
-    token_uri=db.Column(db.String(100))
-    client_id=db.Column(db.String(100))
-    client_secret=db.Column(db.String(100))
-    scopes=db.Column(db.String(100))
+    token=db.Column(db.String(1000))
+    refresh_token=db.Column(db.String(1000))
+    token_uri=db.Column(db.String(300))
+    client_id=db.Column(db.String(300))
+    client_secret=db.Column(db.String(300))
+    scopes=db.Column(db.String(300))
 
     def __init__(self,token=None,refresh_token=None,token_uri=None,client_id=None,client_secret=None,scopes=None):
         self.token=token
