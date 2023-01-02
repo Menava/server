@@ -58,6 +58,7 @@ def add_service():
 	file_id=insert_ToDrive(image.filename,imagePath,folder_id)
 	service=Services(service_type,image.filename,file_id,service_price,service_detail)
 	db.session.add(service)
+	print(db.session)
 	db.session.commit()
 
 	return service_schema.jsonify(service)
