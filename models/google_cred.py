@@ -39,12 +39,13 @@ class Google_cred(db.Model):
     @staticmethod
     def get_cred():
         schemeResult=None
-        google_cred = db.session.query(Google_cred).first()
+        google_cred = Google_cred.query.first()
+        temp_google=google_cred
         
-        if(google_cred!=None):
-            new_scope=[google_cred.scopes]
-            google_cred.scopes=new_scope
-            schemeResult=googleCred_schema.dump(google_cred)
+        if(temp_google!=None):
+            new_scope=[temp_google.scopes]
+            temp_google.scopes=new_scope
+            schemeResult=googleCred_schema.dump(temp_google)
             del schemeResult["id"]
         return schemeResult
 
