@@ -39,7 +39,8 @@ class Google_cred(db.Model):
     @staticmethod
     def get_cred():
         schemeResult=None
-        google_cred = Google_cred.query.first()
+        # google_cred = Google_cred.query.first()
+        google_cred = select(Google_cred).first()
         temp_google=google_cred
         
         if(temp_google!=None):
