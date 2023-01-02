@@ -11,7 +11,6 @@ from .config import CLIENT_ID,CLIENT_SECRET,REDIRECT_URI,SCOPE,API_NAME,API_VERS
 
 google_route = Blueprint('google_route', __name__)
 temp_state=None
-temp_cred=None
 googleCred=Google_cred()
 
 @google_route.route('/getCred')
@@ -44,6 +43,7 @@ def create_service():
 
 @google_route.route('/authorize')
 def authorize():
+  global temp_state
   print("auth in")
   flow = Flow.from_client_secrets_file(
       CLIENT_SECRET_FILE, scopes=SCOPE)
@@ -60,6 +60,7 @@ def authorize():
 
 @google_route.route('/oauth2callback')
 def oauth2callback():
+  global temp_state
   print("oauth in")
   print('callback state',temp_state)
   flow = Flow.from_client_secrets_file(
