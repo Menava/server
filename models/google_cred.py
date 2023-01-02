@@ -1,5 +1,4 @@
 from ..extensions import db,ma
-from sqlalchemy import select
 
 class Google_cred(db.Model):
     __tablename__ = 'google_cred'
@@ -40,15 +39,14 @@ class Google_cred(db.Model):
     @staticmethod
     def get_cred():
         schemeResult=None
-        # google_cred = Google_cred.query.first()
-        google_cred = select(Google_cred).first()
-        temp_google=google_cred
+        google_cred = Google_cred.query.first()
         
-        if(temp_google!=None):
-            new_scope=[temp_google.scopes]
-            temp_google.scopes=new_scope
-            schemeResult=googleCred_schema.dump(temp_google)
+        if(google_cred!=None):
+            new_scope=[google_cred.scopes]
+            google_cred.scopes=new_scope
+            schemeResult=googleCred_schema.dump(google_cred)
             del schemeResult["id"]
+        db.session.delete(google_cred)
         return schemeResult
 
 class GoogleCredSchema(ma.Schema):
