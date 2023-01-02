@@ -61,10 +61,9 @@ def authorize():
 @google_route.route('/oauth2callback')
 def oauth2callback():
   print("oauth in")
-  print("oauth temp_state",temp_state)
-  print('callback state',state)
+  print('callback state',temp_state)
   flow = Flow.from_client_secrets_file(
-      CLIENT_SECRET_FILE, scopes=SCOPE,state=state)
+      CLIENT_SECRET_FILE, scopes=SCOPE,state=temp_state)
 
   flow.redirect_uri = url_for('google_route.oauth2callback', _external=True)
 
