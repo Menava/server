@@ -1,5 +1,5 @@
 import pickle,google_auth_oauthlib,os.path,os,flask,json,requests
-from flask import jsonify, request,session,Blueprint
+from flask import jsonify, request,session,Blueprint,redirect,url_for
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import Flow,InstalledAppFlow
@@ -28,7 +28,7 @@ def load_googleService():
   if google_cred!=None:
     credentials=Credentials(**google_cred)
   else:
-    return flask.redirect('authorize')
+    return redirect('authorize')
   service = build(API_NAME, API_VERSION, credentials=credentials)
   return service
 
@@ -38,40 +38,41 @@ def create_service():
   google_cred=googleCred.get_cred()
 
   if google_cred==None:
-    return flask.redirect('authorize')
+    return redirect('authorize')
   
   return jsonify("Google authentication success")
 
 @google_route.route('/authorize')
 def authorize():
   print("auth in")
-  flow = google_auth_oauthlib.flow.Flow.from_client_secrets_file(
+  flow = Flow.from_client_secrets_file(
       CLIENT_SECRET_FILE, scopes=SCOPE)
 
-  flow.redirect_uri = flask.url_for('google_route.oauth2callback', _external=True)
+  flow.redirect_uri = url_for('google_route.oauth2callback', _external=True)
 
   authorization_url, state = flow.authorization_url(
-      # Enable offline access so that you can refresh an access token without
-      # re-prompting the user for permission. Recommended for web server apps.
       access_type='offline',
-      # Enable incremental authorization. Recommended as a best practice.
       include_granted_scopes='true')
   temp_state=state
-  return flask.redirect(authorization_url)
+  print('auth state',temp_state)
+  return redirect(authorization_url)
 
 
 @google_route.route('/oauth2callback')
 def oauth2callback():
   print("oauth in")
-  flow = google_auth_oauthlib.flow.Flow.from_client_secrets_file(
-      CLIENT_SECRET_FILE, scopes=SCOPE,state=temp_state)
+  state=temp_state
+    print('callback state',state)
+  flow = Flow.from_client_secrets_file(
+      CLIENT_SECRET_FILE, scopes=SCOPE,state=state)
 
-  flow.redirect_uri = flask.url_for('google_route.oauth2callback', _external=True)
+  flow.redirect_uri = url_for('google_route.oauth2callback', _external=True)
 
-  authorization_response = flask.request.url
+  authorization_response = request.url
   flow.fetch_token(authorization_response=authorization_response)
 
   credentials = flow.credentials
+  print('credentials',credentials)
   print("credentials in auth",credentials_to_dict(credentials))
   googleCred.add_cred(credentials.token,credentials.refresh_token,credentials.token_uri,credentials.client_id,credentials.client_secret,credentials.scopes)
 
