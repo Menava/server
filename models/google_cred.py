@@ -1,4 +1,5 @@
 from ..extensions import db,ma
+from sqlalchemy import select
 
 class Google_cred(db.Model):
     __tablename__ = 'google_cred'
