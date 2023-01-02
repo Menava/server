@@ -23,9 +23,10 @@ def load_googleService():
   print("load in")
   service=None
   google_cred=googleCred.get_cred()
-
+  print('google_cred',google_cred)
   if google_cred!=None:
     credentials=Credentials(**google_cred)
+    print(credentials_to_dict(credentials))
   else:
     return redirect('authorize')
   service = build(API_NAME, API_VERSION, credentials=credentials)
