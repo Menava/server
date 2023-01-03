@@ -315,7 +315,7 @@ def test_method(servicePlace_id):
 
 		service_list[serviceItem_result["service_id"]]=[]
 		service_list[serviceItem_result["service_id"]].append(item_list)
-		service_list[serviceItem_result["service_id"]].append(serviceItem["serviceplace"])
+		service_list[serviceItem_result["service_id"]].append(serviceItem_result["serviceplace"])
 		service_list[serviceItem_result["service_id"]].append(serviceItem_result["service_price"])
 		pre_serviceid=serviceItem_result["service_id"]
 
@@ -369,7 +369,7 @@ def loop_serviceItem(voucher_id):
 		if(serviceItem_result["item_id"]!=None):
 			item_list.append(item_result)
 		else:
-			item_list.append(customerItem_result)
+			pass
 		
 		service_list[serviceItem_result["service_id"]]=[]
 		service_list[serviceItem_result["service_id"]].append(item_list)

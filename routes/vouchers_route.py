@@ -196,7 +196,7 @@ def get_itemprofit():
 	voucher_total=0
 	outsource_total=0
 
-	return_dict={'service':'','item':''}
+	return_dict={'service':'','item':'','service total':'','item total':''}
 
 	vouchers_result=db.session.query(Vouchers).all()
 	for voucher in vouchers_result:
@@ -232,32 +232,19 @@ def get_itemprofit():
 					item_list[each_item["id"]]=temp_itemCollection
 				item_total+=item_totalPrice
 
-	voucher_outsoruces=Vouchers_outsources.query.all()
-
-	for voucher_outsoruce in voucher_outsoruces:
-		outsource_total+=voucher_outsoruce.total
-
 	serviceValue_list=list(service_list.values())
 	itemValue_list=list(item_list.values())
 
 	for i in service_list.values():
-		service_array.append(i.__str__())
+		service_array.append(i.getDict())
 	
 	for i in item_list.values():
-		item_array.append(i.__str__())
+		item_array.append(i.getDict())
 	
 	return_dict['service']=service_array
 	return_dict['item']=item_array
-	# print(*serviceValue_list)
-	# print(service_total)
-	# print(*itemValue_list)
-	# print("item total",item_total)
-	# print("service total",service_total)
-	# print("voucher sale",voucher_total)
-	# print("outsource sale",outsource_total)
-
-	# print("service and item total",item_total+service_total)
-	# print("serviceItem plus outsource total",item_total+service_total+outsource_total)
+	return_dict['service total']=service_total
+	return_dict['item total']=item_total
 	
 	return jsonify(return_dict)
 
@@ -268,6 +255,10 @@ class Service_collection():
     self.quantity = quantity
   def __str__(self):
     return f'({self.name},{self.price},{self.quantity})'
+
+  def getDict(self):
+    dic={"name":self.name,"price":self.price,"quantity":self.quantity}
+    return dic
 
 
 
@@ -284,4 +275,7 @@ class Item_collection():
     return f'({self.name},{self.buy_price},{self.price},{self.quantity},{self.profit},{self.profit_percent})'
     # return f'({self.name},{self.price},{self.quantity})'
 
+  def getDict(self):
+    dic={"name":self.name,"buy_price":self.buy_price,"total_price":self.price,"total_quantity":self.quantity,"profit":self.profit,"profit_percent":self.profit_percent}
+    return dic
 	
