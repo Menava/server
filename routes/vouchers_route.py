@@ -248,7 +248,7 @@ def get_itemprofit():
 	
 	return jsonify('test')
 
-class Service_collection(db.Mode):
+class Service_collection():
   def __init__(self,name, price, quantity):
     self.name=name
     self.price = price
@@ -260,7 +260,7 @@ class ServiceCollection_schema(ma.Schema):
     class Meta:
         fields=('id','name','price','quantity')
 
-class Item_collection(db.Mode):
+class Item_collection():
   def __init__(self, name,buy_price,price,quantity,profit,profit_percent):
     self.name=name
     self.buy_price=buy_price
