@@ -245,7 +245,7 @@ def get_itemprofit():
 	print("service and item total",item_total+service_total)
 	print("serviceItem plus outsource total",item_total+service_total+outsource_total)
 	
-	return jsonify('test')
+	return jsonify(*serviceValue_list)
 
 class Service_collection:
   def __init__(self,name, price, quantity):
