@@ -142,13 +142,13 @@ def reset_database(option):
     db.create_all()
     if(option=="withdata"):
         print('here')
-        sql_file=open(r"/home/genshinimpact1234/mysite/server/others/sample_data.sql",'r')
+        sql_file=open(r"/home/genshinimpact1234/mysite/server/others/sample_data.text",'r')
         for line in sql_file:
             if not line.startswith('--') and line.strip('\n'):
                 sql_command += line.strip('\n')
                 if sql_command.endswith(';'):
                     try:
-                        db.session.execute(text(sql_command))
+                        db.session.execute(sql_command)
                         db.session.commit()
                     except Exception as e:
                         print(e)
