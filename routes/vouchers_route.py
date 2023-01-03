@@ -234,7 +234,7 @@ def get_itemprofit():
 
 	serviceValue_list=list(service_list.values())
 	itemValue_list=list(item_list.values())
-	print(serviceCollections_schema(*serviceValue_list))
+	print(serviceCollections_schema.dump(*serviceValue_list))
 	# print(*serviceValue_list)
 	# print(service_total)
 	# print(*itemValue_list)
