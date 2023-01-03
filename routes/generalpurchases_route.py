@@ -1,6 +1,7 @@
 from flask import jsonify,request,render_template,redirect,Blueprint
 from ..extensions import db,d_truncated
 from ..models.general_purchase import General_Purchases,generalPurchase_schema,generalPurchases_schema
+from ..models.employee_payroll import Employees_Payroll,employeePayroll_schema,employeePayrolls_schema
 from datetime import date
 
 generalpurchase_route=Blueprint('generalpurchase_route',__name__)
@@ -63,3 +64,19 @@ def delete_generalpurchase(id):
     db.session.commit()
 
     return generalPurchase_schema.jsonify(gp)
+
+@generalpurchase_route.route('/generalpurchase/total',methods=['GET'])
+def get_generalpurchases_total():
+    total=0
+    gtotal=0
+    etotal=0
+    all_generalpurchases=General_Purchases.query.all()
+    for i in all_generalpurchases:
+        gtotal+=i.total
+    
+    all_employeePay=Employees_Payroll.query.all()
+    for i in all_employeePay:
+        etotal+=i.salary_amount
+    
+    total=etotal+gtotal
+    return jsonify({'total':total,'etotal':etotal,'gtotal':gtotal})

@@ -6,6 +6,7 @@ from ..models.item import Items,item_schema,items_schema
 from ..models.customer_item import Customer_items,customerItem_schema,customerItems_schema
 from ..models.service import Services,service_schema,services_schema
 from ..models.servicePlace_serviceitem import ServicePlaces_servicesitems,serviceplaceServiceItem_schema,serviceplaceServiceItems_schema
+from ..models.voucher_serviceitem import Vouchers_servicesitems,voucherServiceItem_schema,voucherServiceItems_schema
 import json
 
 serviceplaceServiceItem_route=Blueprint('serviceplaceServiceItem_route',__name__)
@@ -192,6 +193,7 @@ def delete_voucherserviceitem(id):
 	if(customerItem_id!="None"):
 		print("customer in")
 		customerItem = Customer_items.query.get(customerItem_id)
+		db.session.delete(customerItem)
 		serviceplace_serviceItems = db.session.query(ServicePlaces_servicesitems, Services_items).filter(ServicePlaces_servicesitems.servicePlace_id==id).filter(Services_items.service_id==service_id).filter(Services_items.customerItem_id==customerItem_id).join(Services_items).all()
 	if(item_id=="None" and customerItem_id=="None" ):
 		print("service in")
@@ -207,7 +209,7 @@ def delete_voucherserviceitem(id):
 		
 		db.session.delete(serviceplace_item)
 		db.session.delete(service_item)
-		db.session.delete(customerItem)
+		
 	db.session.commit()
 
 	return jsonify("TEST")
@@ -289,38 +291,33 @@ def test_method(servicePlace_id):
 	item_list=[]
 	pre_serviceid=None
 	
-	serviceItems=db.session.query(Services_items,ServicePlaces_servicesitems,Items,Services,Customer_items).filter(ServicePlaces_servicesitems.servicePlace_id==servicePlace_id,Items!=None).outerjoin(Items,Customer_items).join(ServicePlaces_servicesitems,Services).all()
+	serviceItems=db.session.query(Services_items,ServicePlaces_servicesitems,Items,Services,Customer_items).filter(ServicePlaces_servicesitems.servicePlace_id==servicePlace_id,Items!=None).outerjoin(Items,Customer_items).join(ServicePlaces_servicesitems,Services).order_by(Services_items.service_id).all()
 	for serviceItem,serviceplace_item,item,service,customer_item in serviceItems:
 		serviceItem_result=serviceItem_schema.dump(serviceItem)
-		serviceItem_result["item_id"]=item
 		serviceItem_result["service"]=service
-		serviceItem_result["customerItem_id"]=customer_item
 		serviceItem_result["serviceplace"]=serviceplace_item.service_status
-		serviceItem_array.append(serviceItem_result)
-	serviceItem_array.sort(key=sortBy_serviceID)
-	
-	for serviceItem in serviceItem_array:
-		item_result=item_schema.dump(serviceItem["item_id"])
+
+		item_result=item_schema.dump(item)
 		if(item_result!={}):
-			item_result["quantity"]=serviceItem["quantity"]
-		customerItem_result=customerItem_schema.dump(serviceItem["customerItem_id"])
+			item_result["quantity"]=serviceItem_result["quantity"]
+			item_result["price"]=serviceItem_result["item_price"]
+		customerItem_result=customerItem_schema.dump(customer_item)
 		if(customerItem_result!={}):
-			customerItem_result["quantity"]=serviceItem["quantity"]
+			customerItem_result["quantity"]=serviceItem_result["quantity"]
 		if(pre_serviceid==None):
-			pre_serviceid=serviceItem["service_id"]
-		if(serviceItem["service_id"]!=pre_serviceid):
+			pre_serviceid=serviceItem_result["service_id"]
+		if(serviceItem_result["service_id"]!=pre_serviceid):
 			item_list=[]
-		if(serviceItem["item_id"]!=None):
+		if(serviceItem_result["item_id"]!=None):
 			item_list.append(item_result)
 		else:
 			item_list.append(customerItem_result)
-		
-		service_list[serviceItem["service_id"]]=[]
-		service_list[serviceItem["service_id"]].append(item_list)
-		service_list[serviceItem["service_id"]].append(serviceItem["serviceplace"])
-		service_list[serviceItem["service_id"]].append(serviceItem["service_price"])
-		pre_serviceid=serviceItem["service_id"]
-	# print(service_list)
+
+		service_list[serviceItem_result["service_id"]]=[]
+		service_list[serviceItem_result["service_id"]].append(item_list)
+		service_list[serviceItem_result["service_id"]].append(serviceItem["serviceplace"])
+		service_list[serviceItem_result["service_id"]].append(serviceItem_result["service_price"])
+		pre_serviceid=serviceItem_result["service_id"]
 
 	for service,items in service_list.items():
 		if(items[0]==[{}]):
@@ -343,5 +340,52 @@ def update_itemQTY(item_id,quantity):
 	db.session.add(item)
 	db.session.commit()
 
-def sortBy_serviceID(item):
-	return item["service_id"]
+def loop_serviceItem(voucher_id):
+	final_array=[]
+	service_line={"service":"","items":[]}
+
+	serviceItem_array=[]
+	sorted_array=[]
+	service_list={}
+	item_list=[]
+	pre_serviceid=None
+	
+	serviceItems=db.session.query(Services_items,Vouchers_servicesitems,Items,Services,Customer_items).filter(Vouchers_servicesitems.voucher_id==voucher_id,Items!=None).outerjoin(Items,Customer_items).join(Vouchers_servicesitems,Services).order_by(Services_items.service_id).all()
+	for serviceItem,serviceplace_item,item,service,customer_item in serviceItems:
+		serviceItem_result=serviceItem_schema.dump(serviceItem)
+		serviceItem_result["service"]=service
+
+		item_result=item_schema.dump(item)
+		if(item_result!={}):
+			item_result["quantity"]=serviceItem_result["quantity"]
+			item_result["price"]=serviceItem_result["item_price"]
+		customerItem_result=customerItem_schema.dump(customer_item)
+		if(customerItem_result!={}):
+			customerItem_result["quantity"]=serviceItem_result["quantity"]
+		if(pre_serviceid==None):
+			pre_serviceid=serviceItem_result["service_id"]
+		if(serviceItem_result["service_id"]!=pre_serviceid):
+			item_list=[]
+		if(serviceItem_result["item_id"]!=None):
+			item_list.append(item_result)
+		else:
+			item_list.append(customerItem_result)
+		
+		service_list[serviceItem_result["service_id"]]=[]
+		service_list[serviceItem_result["service_id"]].append(item_list)
+		service_list[serviceItem_result["service_id"]].append(serviceItem_result["service_price"])
+		pre_serviceid=serviceItem_result["service_id"]
+
+	# print("servicelist",service_list)
+	for service,items in service_list.items():
+		if(items[0]==[{}]):
+			items[0]=[]
+		service=Services.query.filter(Services.id==service).first()
+		service_result=service_schema.dump(service)
+		service_line["service"]=service_result
+		service_line["service"]["service_price"]=items[1]
+		service_line["items"]=items[0]
+		final_array.append(service_line.copy())
+
+	# print(final_array)
+	return final_array
