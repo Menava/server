@@ -1,1 +1,0 @@
-INSERT INTO `car_frame` (id, name) VALUES (NULL, 'Salon'), (NULL, 'Micro'), (NULL, 'Sedan'), (NULL, 'CUV'), (NULL, 'SUV'), (NULL, 'Mini Truck'), (NULL, 'Minivan');

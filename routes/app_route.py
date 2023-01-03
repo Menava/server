@@ -137,13 +137,22 @@ def login(username,password):
 #Database
 @app_route.route("/reset/<option>", methods=["GET"])
 def reset_database(option):
+    sql_command = ''
     db.drop_all()
     db.create_all()
     if(option=="withdata"):
-        file=open(r"/home/genshinimpact1234/mysite/server/others/sample_data.text")
-        sql = file.read().split(';')
-        for i in sql:
-            db.engine.execute(sql)
+        sql_file=open(r"/home/genshinimpact1234/mysite/server/others/sample_data.sql",'r')
+        for line in sql_file:
+            if not line.startswith('--') and line.strip('\n'):
+                sql_command += line.strip('\n')
+                if sql_command.endswith(';'):
+                    try:
+                        db.session.execute(text(sql_command))
+                        db.session.commit()
+                    except:
+                        print('Ops')
+                    finally:
+                        sql_command = ''
     return "reset"
 
 #JWT
