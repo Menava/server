@@ -189,10 +189,14 @@ def get_itemprofit():
 	item_list={}
 
 	service_array=[]
+	item_array=[]
+
 	service_total=0
 	item_total=0
 	voucher_total=0
 	outsource_total=0
+
+	return_dict={'service':'','item':''}
 
 	vouchers_result=db.session.query(Vouchers).all()
 	for voucher in vouchers_result:
@@ -239,7 +243,11 @@ def get_itemprofit():
 	for i in service_list.values():
 		service_array.append(i.__str__())
 	
-	print("service_array",service_array)
+	for i in item_list.values():
+		item_array.append(i.__str__())
+	
+	return_dict['service']=service_array
+	return_dict['item']=item_array
 	# print(*serviceValue_list)
 	# print(service_total)
 	# print(*itemValue_list)
@@ -251,7 +259,7 @@ def get_itemprofit():
 	# print("service and item total",item_total+service_total)
 	# print("serviceItem plus outsource total",item_total+service_total+outsource_total)
 	
-	return jsonify('test')
+	return jsonify(return_dict)
 
 class Service_collection():
   def __init__(self,name, price, quantity):
@@ -273,7 +281,7 @@ class Item_collection():
     self.profit_percent=profit_percent
   
   def __str__(self):
-    # return f'({self.name},{self.buy_price},{self.price},{self.quantity},{self.profit},{self.profit_percent})'
-    return f'({self.name},{self.price},{self.quantity})'
+    return f'({self.name},{self.buy_price},{self.price},{self.quantity},{self.profit},{self.profit_percent})'
+    # return f'({self.name},{self.price},{self.quantity})'
 
 	
