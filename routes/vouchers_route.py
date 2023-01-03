@@ -234,18 +234,19 @@ def get_itemprofit():
 
 	serviceValue_list=list(service_list.values())
 	itemValue_list=list(item_list.values())
+	print(service_list.values())
 	# print(*serviceValue_list)
 	# print(service_total)
 	# print(*itemValue_list)
-	print("item total",item_total)
-	print("service total",service_total)
-	print("voucher sale",voucher_total)
-	print("outsource sale",outsource_total)
+	# print("item total",item_total)
+	# print("service total",service_total)
+	# print("voucher sale",voucher_total)
+	# print("outsource sale",outsource_total)
 
-	print("service and item total",item_total+service_total)
-	print("serviceItem plus outsource total",item_total+service_total+outsource_total)
+	# print("service and item total",item_total+service_total)
+	# print("serviceItem plus outsource total",item_total+service_total+outsource_total)
 	
-	return jsonify(*serviceValue_list)
+	return jsonify('test')
 
 class Service_collection:
   def __init__(self,name, price, quantity):
