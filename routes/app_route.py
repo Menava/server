@@ -141,6 +141,7 @@ def reset_database(option):
     db.drop_all()
     db.create_all()
     if(option=="withdata"):
+        print('here')
         sql_file=open(r"/home/genshinimpact1234/mysite/server/others/sample_data.sql",'r')
         for line in sql_file:
             if not line.startswith('--') and line.strip('\n'):
@@ -149,8 +150,8 @@ def reset_database(option):
                     try:
                         db.session.execute(text(sql_command))
                         db.session.commit()
-                    except:
-                        print('Ops')
+                    except Exception as e:
+                        print(e)
                     finally:
                         sql_command = ''
     return "reset"
