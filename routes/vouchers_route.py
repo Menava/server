@@ -236,7 +236,9 @@ def get_itemprofit():
 	itemValue_list=list(item_list.values())
 
 	for i in service_list.values():
-		print(i)
+		service_array.append(i)
+	
+	print(service_array)
 	# print(*serviceValue_list)
 	# print(service_total)
 	# print(*itemValue_list)
