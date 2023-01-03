@@ -143,8 +143,7 @@ def reset_database(option):
         file=open(r"/home/genshinimpact1234/mysite/server/others/sample_data.text")
         sql = file.read().split(';')
         for i in sql:
-            if len(sql.strip()) > 0:
-                db.engine.execute(sql + ';')
+            db.engine.execute(sql + ';')
     return "reset"
 
 #JWT
