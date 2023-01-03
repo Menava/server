@@ -234,7 +234,7 @@ def get_itemprofit():
 
 	serviceValue_list=list(service_list.values())
 	itemValue_list=list(item_list.values())
-	print(service_list.values())
+	print(serviceCollections_schema(*serviceValue_list))
 	# print(*serviceValue_list)
 	# print(service_total)
 	# print(*itemValue_list)
@@ -248,7 +248,7 @@ def get_itemprofit():
 	
 	return jsonify('test')
 
-class Service_collection:
+class Service_collection(db.Mode):
   def __init__(self,name, price, quantity):
     self.name=name
     self.price = price
@@ -256,7 +256,11 @@ class Service_collection:
   def __str__(self):
     return f'({self.name},{self.price},{self.quantity})'
 
-class Item_collection:
+class ServiceCollection_schema(ma.Schema):
+    class Meta:
+        fields=('id','name','price','quantity')
+
+class Item_collection(db.Mode):
   def __init__(self, name,buy_price,price,quantity,profit,profit_percent):
     self.name=name
     self.buy_price=buy_price
@@ -268,4 +272,14 @@ class Item_collection:
   def __str__(self):
     # return f'({self.name},{self.buy_price},{self.price},{self.quantity},{self.profit},{self.profit_percent})'
     return f'({self.name},{self.price},{self.quantity})'
+
+class ItemCollection_schema(ma.Schema):
+    class Meta:
+        fields=('id','name','buy_price','price','quantity','profit','profit_percent')
+	
+serviceCollection_schema=ServiceCollection_schema()
+serviceCollections_schema=ServiceCollection_schema(many=True)
+
+itemCollection_schema=ItemCollection_schema()
+itemCollections_schema=ItemCollection_schema(many=True)
 	
