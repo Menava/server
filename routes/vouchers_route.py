@@ -188,6 +188,7 @@ def get_itemprofit():
 	service_list={}
 	item_list={}
 
+	service_array=[]
 	service_total=0
 	item_total=0
 	voucher_total=0
