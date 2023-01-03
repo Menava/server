@@ -234,7 +234,9 @@ def get_itemprofit():
 
 	serviceValue_list=list(service_list.values())
 	itemValue_list=list(item_list.values())
-	print(serviceCollections_schema.dump(*serviceValue_list))
+
+	for i in service_list.values():
+		print(i)
 	# print(*serviceValue_list)
 	# print(service_total)
 	# print(*itemValue_list)
@@ -256,9 +258,7 @@ class Service_collection():
   def __str__(self):
     return f'({self.name},{self.price},{self.quantity})'
 
-class ServiceCollection_schema(ma.Schema):
-    class Meta:
-        fields=('id','name','price','quantity')
+
 
 class Item_collection():
   def __init__(self, name,buy_price,price,quantity,profit,profit_percent):
@@ -273,13 +273,4 @@ class Item_collection():
     # return f'({self.name},{self.buy_price},{self.price},{self.quantity},{self.profit},{self.profit_percent})'
     return f'({self.name},{self.price},{self.quantity})'
 
-class ItemCollection_schema(ma.Schema):
-    class Meta:
-        fields=('id','name','buy_price','price','quantity','profit','profit_percent')
-	
-serviceCollection_schema=ServiceCollection_schema()
-serviceCollections_schema=ServiceCollection_schema(many=True)
-
-itemCollection_schema=ItemCollection_schema()
-itemCollections_schema=ItemCollection_schema(many=True)
 	
