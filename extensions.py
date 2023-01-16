@@ -19,6 +19,7 @@ def getTodayDate():
 
 
 def getTargetDate(targetMonth=0,targetDay=0):
+    print(targetMonth,targetDay)
     dt = datetime.datetime.now()
     targetDate_truncated=datetime.date(dt.year, dt.month-targetMonth, dt.day-targetDay)
     return targetDate_truncated
