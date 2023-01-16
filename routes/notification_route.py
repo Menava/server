@@ -44,20 +44,20 @@ def check_notications():
         db.session.commit()
 
 def check_customerNoti():
-    noti_array=[]
-    target_date1=getTargetDate(targetMonth)
-    target_date2=getTargetDate(targetMonth,targetDay)
-    results = db.session.query(Vouchers,Vouchers_servicesitems,Customers_cars).join(Vouchers_servicesitems,Services_items,Customers_cars).filter(Services_items.service_id==2,Vouchers.date<=target_date1,Vouchers.date>=target_date2).all()
-    if results:
-        for voucher,voucher_service,customer_car in results:
-            voucher_service_result=db.session.query(Services).join(Services_items,Vouchers_servicesitems).filter(Vouchers_servicesitems.id==voucher_service.id).first()
-            customer_results=db.session.query(Customers).join(Customers_cars).filter(Customers_cars.id==customer_car.id).first()
-            customer_detail=customer_schema.dump(customer_results)
-            service_detail=service_schema.dump(voucher_service_result)
-            description='{name} has performed {service} {month} months ago'.format(name=customer_detail["name"],service=service_detail["service_type"],month=targetMonth)
-            notification=Notifications(customer_detail["id"],None,description)
-            noti_array.append(notification)
-    return noti_array
+    # noti_array=[]
+    # target_date1=getTargetDate(targetMonth)
+    # target_date2=getTargetDate(targetMonth,targetDay)
+    # results = db.session.query(Vouchers,Vouchers_servicesitems,Customers_cars).join(Vouchers_servicesitems,Services_items,Customers_cars).filter(Services_items.service_id==2,Vouchers.date<=target_date1,Vouchers.date>=target_date2).all()
+    # if results:
+    #     for voucher,voucher_service,customer_car in results:
+    #         voucher_service_result=db.session.query(Services).join(Services_items,Vouchers_servicesitems).filter(Vouchers_servicesitems.id==voucher_service.id).first()
+    #         customer_results=db.session.query(Customers).join(Customers_cars).filter(Customers_cars.id==customer_car.id).first()
+    #         customer_detail=customer_schema.dump(customer_results)
+    #         service_detail=service_schema.dump(voucher_service_result)
+    #         description='{name} has performed {service} {month} months ago'.format(name=customer_detail["name"],service=service_detail["service_type"],month=targetMonth)
+    #         notification=Notifications(customer_detail["id"],None,description)
+    #         noti_array.append(notification)
+    return jsonfiy("test")
 
 def check_itemNoti():
     pass
