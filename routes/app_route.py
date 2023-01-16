@@ -139,7 +139,7 @@ def login(username,password):
 def reset_database(option):
     sql_command = ''
     db.drop_all()
-    # db.create_all()
+    db.create_all()
     # if(option=="withdata"):
     #     print('here')
     #     sql_file=open(r"/home/genshinimpact1234/mysite/server/others/sql.text",'r')
