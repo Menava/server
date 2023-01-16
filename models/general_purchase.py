@@ -1,5 +1,5 @@
 from server import db,ma
-from ..extensions import db,ma,d_truncated
+from ..extensions import db,ma,getTodayDate
 
 class General_Purchases(db.Model):
     __tablename__ = 'general_purchase'
@@ -9,7 +9,7 @@ class General_Purchases(db.Model):
     quantity=db.Column(db.Integer)
     purchase_type=db.Column(db.String(20))
     total=db.Column(db.Float)
-    purchase_date=db.Column(db.Date,default=d_truncated)
+    purchase_date=db.Column(db.Date,default=getTodayDate())
 
     def __init__(self,description,unit_price,quantity,purchase_type,total):
         self.description=description

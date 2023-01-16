@@ -1,11 +1,11 @@
 from server import db,ma
-from ..extensions import db,ma,d_truncated
+from ..extensions import db,ma,getTodayDate
 
 class Employees_Payroll(db.Model):
     __tablename__ = 'employee_payroll'
     id=db.Column(db.Integer,primary_key=True)
     salary_amount=db.Column(db.Float)
-    paid_date=db.Column(db.Date,default=d_truncated)
+    paid_date=db.Column(db.Date,default=getTodayDate())
 
     employee_id=db.Column(db.Integer,db.ForeignKey('employees.id'))
 

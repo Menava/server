@@ -12,8 +12,11 @@ ma=Marshmallow()
 # socketio = SocketIO()
 # sess=Session()
 
-dt = datetime.datetime.now()
-d_truncated = datetime.date(dt.year, dt.month, dt.day)
+def getTodayDate():
+    dt = datetime.datetime.now()
+    d_truncated = datetime.date(dt.year, dt.month, dt.day)
+    return d_truncated
+
 
 def getTargetDate(targetMonth=0,targetDay=0):
     targetDate_truncated=datetime.date(dt.year, dt.month-targetMonth, dt.day-targetDay)

@@ -1,10 +1,10 @@
 from server import db,ma
-from ..extensions import db,ma,d_truncated
+from ..extensions import db,ma,getTodayDate
 
 class Items_Payment(db.Model):
     __tablename__ = 'item_payment'
     id=db.Column(db.Integer,primary_key=True)
-    payment_date=db.Column(db.Date,default=d_truncated)
+    payment_date=db.Column(db.Date,default=getTodayDate())
     paid_amount=db.Column(db.Float)
 
     purchase_id=db.Column(db.Integer,db.ForeignKey('item_purchase.id'))

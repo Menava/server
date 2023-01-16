@@ -1,8 +1,7 @@
 from flask import jsonify,request,render_template,redirect,Blueprint
-from ..extensions import db,d_truncated
+from ..extensions import db,getTodayDate
 from ..models.employee import Employees,employee_schema,employees_schema
 from ..models.employee_payroll import Employees_Payroll,employeePayroll_schema,employeePayrolls_schema
-from datetime import date
 
 employeepayrolls_route=Blueprint('employeepayrolls_route',__name__)
 
