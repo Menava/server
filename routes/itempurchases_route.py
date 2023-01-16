@@ -1,5 +1,5 @@
 from flask import jsonify,request,render_template,redirect,Blueprint
-from ..extensions import db,d_truncated
+from ..extensions import db,getTodayDate
 
 from ..models.item_purchase import Items_Purchase,itemPurchase_schema,itemPurchases_schema
 from ..models.item import Items,item_schema,items_schema

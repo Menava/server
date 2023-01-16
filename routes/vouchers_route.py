@@ -1,5 +1,5 @@
 from flask import jsonify,request,render_template,redirect,Blueprint
-from ..extensions import db,ma,d_truncated
+from ..extensions import db,ma,getTodayDate
 from ..models.voucher import Vouchers,voucher_schema,vouchers_schema
 from ..models.voucher_outsource import Vouchers_outsources,voucheroutsource_schema,voucheroutsources_schema
 from ..models.service import Services,service_schema,services_schema
