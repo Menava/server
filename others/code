@@ -50,3 +50,10 @@ Stop:
 $ gcloud app versions stop dev
 Start:
 $ gcloud app versions start dev
+
+#Pythonanywhere database backup and restore 
+#Back up
+cd
+mysqldump -u genshinimpact123 -h genshinimpact1234.mysql.pythonanywhere-services.com --set-gtid-purged=OFF --no-tablespaces --column-statistics=0 'genshinimpact123$flask'  > db-backup.sql
+#Restore
+mysql -u genshinimpact123 -h genshinimpact1234.mysql.pythonanywhere-services.com 'genshinimpact123$flask'  < db-backup.sql
