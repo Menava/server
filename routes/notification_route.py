@@ -57,7 +57,7 @@ def check_customerNoti():
     #         description='{name} has performed {service} {month} months ago'.format(name=customer_detail["name"],service=service_detail["service_type"],month=targetMonth)
     #         notification=Notifications(customer_detail["id"],None,description)
     #         noti_array.append(notification)
-    return jsonfiy("test")
+    return jsonify("test")
 
 def check_itemNoti():
     pass
