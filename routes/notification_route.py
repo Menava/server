@@ -35,13 +35,14 @@ def delete_notifications(id):
     pass
 
 def check_notications():
-    customer_notis=check_customerNoti()
-    if customer_notis:
-        for customer_noti in customer_notis:
-            checkNoti=Notifications.query.filter(Notifications.description==customer_noti.description).first()
-            if not checkNoti:
-                db.session.add(customer_noti)
-        db.session.commit()
+    pass
+    # customer_notis=check_customerNoti()
+    # if customer_notis:
+    #     for customer_noti in customer_notis:
+    #         checkNoti=Notifications.query.filter(Notifications.description==customer_noti.description).first()
+    #         if not checkNoti:
+    #             db.session.add(customer_noti)
+    #     db.session.commit()
 
 def check_customerNoti():
     # noti_array=[]
