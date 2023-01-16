@@ -31,7 +31,7 @@ def get_vouchers():
 	customerCar_array={"customer":"","car":""}
 	voucher_array=[]
 
-	vouchers = db.session.query(Vouchers, Customers_cars,Vouchers_Payment).join(Customers_cars,Vouchers_Payment).all()
+	vouchers = db.session.query(Vouchers, Customers_cars,Vouchers_Payment).join(Customers_cars,Vouchers_Payment).order_by(desc(Vouchers.date)).all()
 	for voucher, customer_car,voucher_payment in vouchers:
 		voucher_result=voucher_schema.dump(voucher)
 		customer_cars = db.session.query(Customers_cars, Customers, Cars).filter(Customers_cars.id==voucher.customerCar_id).join(Customers).join(Cars).all()
