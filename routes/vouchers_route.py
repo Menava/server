@@ -197,7 +197,7 @@ def get_itemprofit(option):
 	outsource_total=0
 
 	return_dict={'service':'','item':'','service total':'','item total':''}
-	if(option=='day'):
+	if(option=='today'):
 		vouchers_result=Vouchers.query.filter(Vouchers.date==getTodayDate()).all()
 	if(option=='week'):
 		vouchers_result=Vouchers.query.filter(Vouchers.date>getTodayDate() - getTimeWindow('week')).all()
