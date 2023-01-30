@@ -151,7 +151,6 @@ def get_sales(option):
 	return_dict={'num of sales':'','revenue':'','total expense':''}
 	if(option=='today'):
 		query_result=db.session.query(Vouchers,Vouchers_Payment).join(Vouchers_Payment).filter(Vouchers.date==getTodayDate()).all()
-		print("query_result",query_result)
 		all_generalpurchases=General_Purchases.query.filter(General_Purchases.purchase_date==getTodayDate()).all()
 		all_employeePay=Employees_Payroll.query.filter(Employees_Payroll.paid_date==getTodayDate()).all()
 	if(option=='week'):
@@ -163,8 +162,7 @@ def get_sales(option):
 		all_generalpurchases=General_Purchases.query.filter(General_Purchases.purchase_date>getTodayDate() - getTimeWindow('month')).all()
 		all_employeePay=Employees_Payroll.query.filter(Employees_Payroll.paid_date>getTodayDate() - getTimeWindow('month')).all()
 	for voucher,voucherPayment in query_result:
-		print("paid amount",voucherPayment["paid_amount"])
-		voucher["total"]=voucherPayment["paid_amount"]
+		voucher.total=voucherPayment.paid_amount
 		revenue+=voucher["total"]
 		voucher_count+=1
 
