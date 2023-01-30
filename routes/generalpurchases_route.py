@@ -64,19 +64,3 @@ def delete_generalpurchase(id):
     db.session.commit()
 
     return generalPurchase_schema.jsonify(gp)
-
-@generalpurchase_route.route('/generalpurchase/total',methods=['GET'])
-def get_generalpurchases_total():
-    total=0
-    gtotal=0
-    etotal=0
-    all_generalpurchases=General_Purchases.query.all()
-    for i in all_generalpurchases:
-        gtotal+=i.total
-    
-    all_employeePay=Employees_Payroll.query.all()
-    for i in all_employeePay:
-        etotal+=i.salary_amount
-    
-    total=etotal+gtotal
-    return jsonify({'total':total,'etotal':etotal,'gtotal':gtotal})

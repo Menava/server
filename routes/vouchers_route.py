@@ -10,6 +10,9 @@ from ..models.service_item import Services_items,serviceItem_schema,serviceItems
 from ..models.item import Items,item_schema,items_schema
 from ..models.item_purchase import Items_Purchase,itemPurchase_schema,itemPurchases_schema
 
+from ..models.general_purchase import General_Purchases,generalPurchase_schema,generalPurchases_schema
+from ..models.employee_payroll import Employees_Payroll,employeePayroll_schema,employeePayrolls_schema
+
 from ..models.customer import Customers,customer_schema,customers_schema
 from ..models.car import Cars,car_schema,cars_schema
 from ..models.customer_car import Customers_cars,customerCar_schema,customerCars_schema
@@ -143,19 +146,38 @@ def get_dashboard():
 
 @voucher_route.route('/voucher/sales/<option>',methods=['GET'])
 def get_sales(option):
-	# if(option=='today'):
-	# 	vouchers_result=Vouchers.query.filter(Vouchers.date==getTodayDate()).all()
-	# if(option=='week'):
-	# 	vouchers_result=Vouchers.query.filter(Vouchers.date>getTodayDate() - getTimeWindow('week')).all()
-	# if(option=='month'):
-	# 	vouchers_result=Vouchers.query.filter(Vouchers.date>getTodayDate() - getTimeWindow('month')).all()
-	print('get sales in')
-	query_result=db.session.query(Vouchers,Vouchers_Payment).join(Vouchers_Payment).all()
+	voucher_count=0
+	revenue=0
+	return_dict={'num of sales':'','revenue':'','total expense':''}
+	if(option=='today'):
+		query_result=db.session.query(Vouchers,Vouchers_Payment).join(Vouchers_Payment).filter(Vouchers.date==getTodayDate()).all()
+		all_generalpurchases=General_Purchases.query.filter(General_Purchases.purchase_date==getTodayDate()).all()
+		all_employeePay=Employees_Payroll.query.filter(Employees_Payroll.paid_date==getTodayDate()).all()
+	if(option=='week'):
+		query_result=db.session.query(Vouchers,Vouchers_Payment).join(Vouchers_Payment).filter(Vouchers.date>getTodayDate() - getTimeWindow('week')).all()
+		all_generalpurchases=General_Purchases.query.filter(General_Purchases.purchase_date>getTodayDate() - getTimeWindow('week')).all()
+		all_employeePay=Employees_Payroll.query.filter(Employees_Payroll.paid_date>getTodayDate() - getTimeWindow('week')).all()
+	if(option=='month'):
+		query_result=db.session.query(Vouchers,Vouchers_Payment).join(Vouchers_Payment).filter(Vouchers.date>getTodayDate() - getTimeWindow('month')).all()
+		all_generalpurchases=General_Purchases.query.filter(General_Purchases.purchase_date>getTodayDate() - getTimeWindow('month')).all()
+		all_employeePay=Employees_Payroll.query.filter(Employees_Payroll.paid_date>getTodayDate() - getTimeWindow('month')).all()
 	for voucher,voucher_payment in query_result:
-		print('voucher',voucher_schema.dump(voucher))
-		print('voucher payment',voucherPayment_schema.dump(voucher_payment))
-		
-	return jsonify('test')
+		voucher["total"]=voucher_payment["paid_amount"]
+		revenue+=voucher["total"]
+		voucher_count+=1
+
+	for i in all_generalpurchases:
+		gtotal+=i.total
+
+	for i in all_employeePay:
+		etotal+=i.salary_amount
+
+	total_expense=etotal+gtotal
+	
+	return_dict['revenue']=revenue
+	return_dict['num of sales']=voucher_count
+	return_dict['total expense']=total_expense
+	return jsonify(return_dict)
 
 @voucher_route.route('/itemprofit/<option>', methods=['GET'])
 def get_itemprofit(option):
@@ -167,10 +189,11 @@ def get_itemprofit(option):
 
 	service_total=0
 	item_total=0
+	item_ProfitTotal=0
 	voucher_total=0
 	outsource_total=0
 
-	return_dict={'service':'','item':'','service total':'','item total':''}
+	return_dict={'service':'','item':'','service total':'','item total':'','item profit total':''}
 	if(option=='today'):
 		vouchers_result=Vouchers.query.filter(Vouchers.date==getTodayDate()).all()
 	if(option=='week'):
@@ -209,6 +232,7 @@ def get_itemprofit(option):
 					temp_itemCollection.profit_percent="%.2f" % (temp_itemCollection.profit/(temp_itemCollection.buy_price*temp_itemCollection.quantity)*100)
 					item_list[each_item["id"]]=temp_itemCollection
 				item_total+=item_totalPrice
+				item_ProfitTotal+=item_profit
 
 	serviceValue_list=list(service_list.values())
 	itemValue_list=list(item_list.values())
@@ -223,6 +247,7 @@ def get_itemprofit(option):
 	return_dict['item']=item_array
 	return_dict['service total']=service_total
 	return_dict['item total']=item_total
+	return_dict['item profit total']=item_ProfitTotal
 	
 	return jsonify(return_dict)
 
