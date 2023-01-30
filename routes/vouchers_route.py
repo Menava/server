@@ -1,5 +1,5 @@
 from flask import jsonify,request,render_template,redirect,Blueprint
-from ..extensions import db,ma,getTodayDate
+from ..extensions import db,ma,getTodayDate,getTimeWindow
 from ..models.voucher import Vouchers,voucher_schema,vouchers_schema
 from ..models.voucher_outsource import Vouchers_outsources,voucheroutsource_schema,voucheroutsources_schema
 from ..models.service import Services,service_schema,services_schema
@@ -205,7 +205,8 @@ def get_itemprofit(option):
 		print(vouchers_schema.dump(vouchers_result))
 	if(option=='week'):
 		print('week in')
-		vouchers_result=Vouchers.query.filter(Vouchers.date>getTodayDate() - timeDelta(weeks=1)).all()
+		getTimeWindow('week')
+		# vouchers_result=Vouchers.query.filter(Vouchers.date>getTodayDate() - timeDelta(weeks=1)).all()
 		print(vouchers_schema.dump(vouchers_result))
 	if(option=='month'):
 		print('month in')
