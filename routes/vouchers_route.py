@@ -183,8 +183,8 @@ def get_sales(day,month,year):
 
 	return jsonify(total_sale)
 
-@voucher_route.route('/itemprofit', methods=['GET'])
-def get_itemprofit():
+@voucher_route.route('/itemprofit/<option>', methods=['GET'])
+def get_itemprofit(option):
 	service_list={}
 	item_list={}
 
@@ -197,7 +197,14 @@ def get_itemprofit():
 	outsource_total=0
 
 	return_dict={'service':'','item':'','service total':'','item total':''}
-
+	if(option=='day'):
+		vouchers_result=Vouchers.query.filter(Vouchers.date==getTodayDate()).all()
+		print("day",vouchers_schema.dump(voucher_result))
+	if(option=='week'):
+		query_vouchers=Vouchers.query.filter(Vouchers.date<=getTodayDate()).filter(Vouchers.date>=star_Date).all()
+		print("week",vouchers_schema.dump(voucher_result))
+	if(option=='month'):
+		pass
 	vouchers_result=db.session.query(Vouchers).all()
 	for voucher in vouchers_result:
 		voucher_total+=voucher.total
@@ -273,7 +280,6 @@ class Item_collection():
   
   def __str__(self):
     return f'({self.name},{self.buy_price},{self.price},{self.quantity},{self.profit},{self.profit_percent})'
-    # return f'({self.name},{self.price},{self.quantity})'
 
   def getDict(self):
     dic={"name":self.name,"buy_price":self.buy_price,"total_price":self.price,"total_quantity":self.quantity,"profit":self.profit,"profit_percent":self.profit_percent}

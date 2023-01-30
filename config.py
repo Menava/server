@@ -48,8 +48,6 @@ class ApplicationConfig:
 )
     SQLALCHEMY_DATABASE_URI = SQLALCHEMY_DATABASE_URI
     os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
-    # SQLALCHEMY_DATABASE_URI = f"mysql + mysqldb://root@{os.environ['PUBLIC_IP_ADDRESS']}/{os.environ['DBNAME']}?unix_socket =/cloudsql/{os.environ['PROJECT_ID']}:{os.environ['INSTANCE_NAME']}"
-    # SQLALCHEMY_DATABASE_URI = 'mysql+mysqldb://root@35.188.202.193/flask?unix_socket=/cloudsql/nice-flask:nice-workshop'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     #Session Config
