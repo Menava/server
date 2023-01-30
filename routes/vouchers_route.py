@@ -161,8 +161,9 @@ def get_sales(option):
 		query_result=db.session.query(Vouchers,Vouchers_Payment).join(Vouchers_Payment).filter(Vouchers.date>getTodayDate() - getTimeWindow('month')).all()
 		all_generalpurchases=General_Purchases.query.filter(General_Purchases.purchase_date>getTodayDate() - getTimeWindow('month')).all()
 		all_employeePay=Employees_Payroll.query.filter(Employees_Payroll.paid_date>getTodayDate() - getTimeWindow('month')).all()
-	for voucher,voucher_payment in query_result:
-		voucher["total"]=voucher_payment["paid_amount"]
+	for voucher,voucherPayment in query_result:
+		print(voucherPayment["paid_amount"])
+		voucher["total"]=voucherPayment["paid_amount"]
 		revenue+=voucher["total"]
 		voucher_count+=1
 
