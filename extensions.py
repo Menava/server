@@ -4,7 +4,7 @@ from flask_marshmallow import Marshmallow
 from flask_socketio import SocketIO
 from flask_session import Session
 
-import datetime
+from datetime import date, datetime, timedelta
 
 db=SQLAlchemy()
 ma=Marshmallow()
@@ -13,13 +13,13 @@ ma=Marshmallow()
 # sess=Session()
 
 def getTodayDate():
-    dt = datetime.datetime.now()
-    d_truncated = datetime.date(dt.year, dt.month, dt.day)
+    dt = datetime.now()
+    d_truncated = date(dt.year, dt.month, dt.day)
     return d_truncated
 
 def getTimeWindow(option):
     if(option=='week'):
-        print(timeDelta(weeks=1))
+        print(timedelta(weeks=1))
     # if(option=='month'):
     #     dt=timeDelta(days=30)
     # d_truncated = datetime.date(dt.year, dt.month, dt.day)
@@ -27,6 +27,6 @@ def getTimeWindow(option):
 
 def getTargetDate(targetMonth=0,targetDay=0):
     print(targetMonth,targetDay)
-    dt = datetime.datetime.now()
-    targetDate_truncated=datetime.date(dt.year, dt.month-targetMonth, dt.day-targetDay)
+    dt = datetime.now()
+    targetDate_truncated=date(dt.year, dt.month-targetMonth, dt.day-targetDay)
     return targetDate_truncated
