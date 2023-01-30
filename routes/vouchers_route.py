@@ -148,11 +148,14 @@ def get_dashboard():
 def get_sales(option):
 	voucher_count=0
 	revenue=0
+	etotal=0
+	gtotal=0
 	return_dict={'num of sales':'','revenue':'','total expense':''}
 	if(option=='today'):
 		query_result=db.session.query(Vouchers,Vouchers_Payment).join(Vouchers_Payment).filter(Vouchers.date==getTodayDate()).all()
 		all_generalpurchases=General_Purchases.query.filter(General_Purchases.purchase_date==getTodayDate()).all()
 		all_employeePay=Employees_Payroll.query.filter(Employees_Payroll.paid_date==getTodayDate()).all()
+		print()
 	if(option=='week'):
 		query_result=db.session.query(Vouchers,Vouchers_Payment).join(Vouchers_Payment).filter(Vouchers.date>getTodayDate() - getTimeWindow('week')).all()
 		all_generalpurchases=General_Purchases.query.filter(General_Purchases.purchase_date>getTodayDate() - getTimeWindow('week')).all()
