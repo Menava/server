@@ -141,46 +141,20 @@ def get_dashboard():
 				# services_array.append(voucher_detail)
 	return jsonify('Test')
 
-@voucher_route.route('/voucher/sales/<day>/<month>/<year>/',methods=['GET'])
-def get_sales(day,month,year):
-	total_sale=0
-	voucher_Date=date(year=int(year),month=int(month),day=int(day))
-
-	# star_Date=date(year=int(2021),month=int(1),day=int(1))
-	# end_Date=date(year=int(2021),month=int(12),day=int(31))
-
-	# query_vouchers=Vouchers.query.filter(Vouchers.date<=end_Date).filter(Vouchers.date>=star_Date).all()
-	query_vouchers=Vouchers.query.filter(Vouchers.date==voucher_Date).all()
-	for voucher in query_vouchers:
-		total_sale+=voucher.total
+@voucher_route.route('/voucher/sales/<option>',methods=['GET'])
+def get_sales(option):
+	# if(option=='today'):
+	# 	vouchers_result=Vouchers.query.filter(Vouchers.date==getTodayDate()).all()
+	# if(option=='week'):
+	# 	vouchers_result=Vouchers.query.filter(Vouchers.date>getTodayDate() - getTimeWindow('week')).all()
+	# if(option=='month'):
+	# 	vouchers_result=Vouchers.query.filter(Vouchers.date>getTodayDate() - getTimeWindow('month')).all()
 	
-
-	
-	#daily sales
-	# voucherDetails=[]
-	# dist={"voucher_serviceitem":voucherDetails}
-	
-	# voucher_date=d_truncated
-	# query_vouchers=Vouchers.query.filter(Vouchers.date==voucher_date).all()
-	# for query_voucher in query_vouchers:
-	# 	voucher_result=voucher_schema.dump(query_voucher)
-	# 	vouchers_serviceItems = db.session.query(Vouchers_servicesitems, Services_items).filter(Vouchers_servicesitems.voucher_id==voucher_result["id"]).join(Services_items).all()
-	# 	for vouchers_serviceItem, service_item in vouchers_serviceItems:
-	# 		serviceItems = db.session.query(Services_items,Items.id!=None,Services,Customer_items).filter(Services_items.id==vouchers_serviceItem.serviceItem_id,Items!=None).outerjoin(Items).join(Services).outerjoin(Customer_items).all()
-	# 		for service_item, item,customer_item,service in serviceItems:
-	# 			item_result=item_schema.dump(item)
-	# 			service_result=service_schema.dump(service)
-	# 			customerItem_result=customerItem_schema.dump(customer_item)
-	# 		serviceitem_result=serviceItem_schema.dump(service_item)
-	# 		serviceitem_result['item_id']=item_result
-	# 		serviceitem_result['service_id']=service_result
-	# 		voucherDetail_result=voucherServiceItem_schema.dump(vouchers_serviceItem)
-	# 		voucherDetail_result['serviceItem_id']=serviceitem_result
-	# 		voucherDetails.append(voucherDetail_result)
-		# print(serviceitem_result)
-
-	# print(dist)
-
+	query_result=db.session.query(Vouchers,Vouchers_Payment).join(Vouchers_Payment).filter(Vouchers.date>getTodayDate() - getTimeWindow('week')).all()
+	for voucher,voucher_payment in query_result:
+		print('voucher',vouchers_schema.dump(voucher))
+		print('voucher payment',voucherPayments_schema.dump(voucher_payment))
+		
 	return jsonify(total_sale)
 
 @voucher_route.route('/itemprofit/<option>', methods=['GET'])
