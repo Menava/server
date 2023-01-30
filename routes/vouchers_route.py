@@ -205,7 +205,7 @@ def get_itemprofit(option):
 		print(vouchers_schema.dump(vouchers_result))
 	if(option=='week'):
 		print('week in')
-		vouchers_result=Vouchers.query.filter(Vouchers.date<=getTodayDate()).filter(Vouchers.date>=star_Date).all()
+		vouchers_result=Vouchers.query.filter(Vouchers.date>getTodayDate() - timeDelta(weeks=1)).all()
 		print(vouchers_schema.dump(vouchers_result))
 	if(option=='month'):
 		print('month in')
