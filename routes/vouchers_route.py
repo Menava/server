@@ -163,7 +163,7 @@ def get_sales(option):
 		all_employeePay=Employees_Payroll.query.filter(Employees_Payroll.paid_date>getTodayDate() - getTimeWindow('month')).all()
 	for voucher,voucherPayment in query_result:
 		voucher.total=voucherPayment.paid_amount
-		revenue+=voucher["total"]
+		revenue+=voucher.total
 		voucher_count+=1
 
 	for i in all_generalpurchases:
