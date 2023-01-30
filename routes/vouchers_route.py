@@ -149,7 +149,7 @@ def get_sales(option):
 	# 	vouchers_result=Vouchers.query.filter(Vouchers.date>getTodayDate() - getTimeWindow('week')).all()
 	# if(option=='month'):
 	# 	vouchers_result=Vouchers.query.filter(Vouchers.date>getTodayDate() - getTimeWindow('month')).all()
-	
+	print('get sales in')
 	query_result=db.session.query(Vouchers,Vouchers_Payment).join(Vouchers_Payment).filter(Vouchers.date>getTodayDate() - getTimeWindow('week')).all()
 	for voucher,voucher_payment in query_result:
 		print('voucher',vouchers_schema.dump(voucher))
