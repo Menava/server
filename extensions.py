@@ -21,7 +21,7 @@ def getTimeWindow(option):
     if(option=='week'):
         return timedelta(weeks=1)
     if(option=='month'):
-        return timeDelta(days=30)
+        return timedelta(days=30)
 
 def getTargetDate(targetMonth=0,targetDay=0):
     print(targetMonth,targetDay)
