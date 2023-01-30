@@ -201,7 +201,7 @@ def get_itemprofit(option):
 		vouchers_result=Vouchers.query.filter(Vouchers.date==getTodayDate()).all()
 		print(vouchers_schema.dump(voucher_result))
 	if(option=='week'):
-		query_vouchers=Vouchers.query.filter(Vouchers.date<=getTodayDate()).filter(Vouchers.date>=star_Date).all()
+		vouchers_result=Vouchers.query.filter(Vouchers.date<=getTodayDate()).filter(Vouchers.date>=star_Date).all()
 		print(vouchers_schema.dump(voucher_result))
 	if(option=='month'):
 		pass
