@@ -152,10 +152,8 @@ def get_sales(option):
 	print('get sales in')
 	query_result=db.session.query(Vouchers,Vouchers_Payment).join(Vouchers_Payment).all()
 	for voucher,voucher_payment in query_result:
-		# print('voucher',vouchers_schema.dump(voucher))
-		# print('voucher payment',voucherPayments_schema.dump(voucher_payment))
-		print(voucher)
-		print(voucher_payment)
+		print('voucher',voucher_schema.dump(voucher))
+		print('voucher payment',voucherPayment_schema.dump(voucher_payment))
 		
 	return jsonify('test')
 
