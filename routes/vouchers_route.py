@@ -155,7 +155,7 @@ def get_sales(option):
 		print('voucher',vouchers_schema.dump(voucher))
 		print('voucher payment',voucherPayments_schema.dump(voucher_payment))
 		
-	return jsonify(total_sale)
+	return jsonify('test')
 
 @voucher_route.route('/itemprofit/<option>', methods=['GET'])
 def get_itemprofit(option):
