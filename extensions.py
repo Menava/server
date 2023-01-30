@@ -19,11 +19,9 @@ def getTodayDate():
 
 def getTimeWindow(option):
     if(option=='week'):
-        print(timedelta(weeks=1))
-    # if(option=='month'):
-    #     dt=timeDelta(days=30)
-    # d_truncated = datetime.date(dt.year, dt.month, dt.day)
-    # return d_truncated
+        return timedelta(weeks=1)
+    if(option=='month'):
+        return timeDelta(days=30)
 
 def getTargetDate(targetMonth=0,targetDay=0):
     print(targetMonth,targetDay)
