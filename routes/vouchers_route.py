@@ -199,10 +199,10 @@ def get_itemprofit(option):
 	return_dict={'service':'','item':'','service total':'','item total':''}
 	if(option=='day'):
 		vouchers_result=Vouchers.query.filter(Vouchers.date==getTodayDate()).all()
-		print(vouchers_schema.dump(voucher_result))
+		print(vouchers_schema.dump(vouchers_result))
 	if(option=='week'):
 		vouchers_result=Vouchers.query.filter(Vouchers.date<=getTodayDate()).filter(Vouchers.date>=star_Date).all()
-		print(vouchers_schema.dump(voucher_result))
+		print(vouchers_schema.dump(vouchers_result))
 	if(option=='month'):
 		pass
 	vouchers_result=db.session.query(Vouchers).all()
