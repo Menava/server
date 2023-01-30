@@ -197,14 +197,14 @@ def get_itemprofit(option):
 	outsource_total=0
 
 	return_dict={'service':'','item':'','service total':'','item total':''}
-	# if(option=='day'):
-	# 	vouchers_result=Vouchers.query.filter(Vouchers.date==getTodayDate()).all()
-	# 	print("day",vouchers_schema.dump(voucher_result))
-	# if(option=='week'):
-	# 	query_vouchers=Vouchers.query.filter(Vouchers.date<=getTodayDate()).filter(Vouchers.date>=star_Date).all()
-	# 	print("week",vouchers_schema.dump(voucher_result))
-	# if(option=='month'):
-	# 	pass
+	if(option=='day'):
+		vouchers_result=Vouchers.query.filter(Vouchers.date==getTodayDate()).all()
+		print(vouchers_schema.dump(voucher_result))
+	if(option=='week'):
+		query_vouchers=Vouchers.query.filter(Vouchers.date<=getTodayDate()).filter(Vouchers.date>=star_Date).all()
+		print(vouchers_schema.dump(voucher_result))
+	if(option=='month'):
+		pass
 	vouchers_result=db.session.query(Vouchers).all()
 	for voucher in vouchers_result:
 		voucher_total+=voucher.total
