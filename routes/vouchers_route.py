@@ -152,6 +152,7 @@ def get_sales(option):
 	etotal=0
 	gtotal=0
 	gpChart_array=[]
+	gp_data={}
 	return_dict={'num of sales':'','income':'','revenue':'','total expense':'','general purchase':'','emp salary':'','gp_chart':''}
 	if(option=='today'):
 		query_result=db.session.query(Vouchers,Vouchers_Payment).join(Vouchers_Payment).filter(Vouchers.date==getTodayDate()).all()
@@ -180,8 +181,10 @@ def get_sales(option):
 	for i in all_employeePay:
 		etotal+=i.salary_amount
 	
-	# for i in gp_groupby:
-	# 	gpChart_array.append(i)
+	for i in gp_groupby:
+		print(i)
+		# gp_data["Category"]=
+		# gpChart_array.append(i)
 
 	total_expense=etotal+gtotal
 	income=revenue-total_expense
