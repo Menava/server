@@ -182,9 +182,9 @@ def get_sales(option):
 		etotal+=i.salary_amount
 	
 	for i in gp_groupby:
-		print(i)
-		# gp_data["Category"]=
-		# gpChart_array.append(i)
+		gp_data["Category"]=i[0]
+		gp_data['Total']=i[1]
+		gpChart_array.append(gp_data)
 
 	total_expense=etotal+gtotal
 	income=revenue-total_expense
@@ -196,7 +196,7 @@ def get_sales(option):
 	return_dict['income']=income
 	return_dict['general purchase']=gtotal
 	return_dict['emp salary']=etotal
-	return_dict['gp_chart']=gp_groupby
+	return_dict['gp_chart']=gpChart_array
 	
 	print('return_dict',return_dict)
 	return jsonify(return_dict)
