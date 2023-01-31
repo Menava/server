@@ -21,7 +21,7 @@ from ..models.customer_item import Customer_items,customerItem_schema,customerIt
 from ..models.final_checklist import Final_Checklists,finalChecklist_schema,finalChecklists_schema
 from ..models.initial_checklist import Initial_Checklists,initialChecklist_schema,initialChecklists_schema
 from datetime import date
-from sqlalchemy import func,label
+from sqlalchemy import func
 
 voucher_route=Blueprint('voucher_route',__name__)
 
