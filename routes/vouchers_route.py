@@ -195,6 +195,7 @@ def get_sales(option):
 	return_dict['emp salary']=etotal
 	return_dict['gp_chart']=gpChart_array
 	
+	print('return_dict',return_dict)
 	return jsonify(return_dict)
 
 @voucher_route.route('/itemprofit/<option>', methods=['GET'])
