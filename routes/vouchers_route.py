@@ -184,7 +184,7 @@ def get_sales(option):
 	for i in gp_groupby:
 		gp_data["Category"]=i[0]
 		gp_data['Total']=i[1]
-		gpChart_array.append(gp_data)
+		gpChart_array.append(gp_data.copy())
 
 	total_expense=etotal+gtotal
 	income=revenue-total_expense
