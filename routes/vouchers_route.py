@@ -183,7 +183,7 @@ def get_sales(option):
 	return_dict['revenue']=revenue
 	return_dict['num of sales']=voucher_count
 	return_dict['total expense']=total_expense
-	return_dict['icome']=income
+	return_dict['income']=income
 	
 	return jsonify(return_dict)
 
