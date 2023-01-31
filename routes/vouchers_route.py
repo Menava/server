@@ -180,8 +180,8 @@ def get_sales(option):
 	for i in all_employeePay:
 		etotal+=i.salary_amount
 	
-	for i in gp_groupby:
-		gpChart_array.append(i)
+	# for i in gp_groupby:
+	# 	gpChart_array.append(i)
 
 	total_expense=etotal+gtotal
 	income=revenue-total_expense
@@ -193,7 +193,7 @@ def get_sales(option):
 	return_dict['income']=income
 	return_dict['general purchase']=gtotal
 	return_dict['emp salary']=etotal
-	return_dict['gp_chart']=gpChart_array
+	return_dict['gp_chart']=gp_groupby
 	
 	print('return_dict',return_dict)
 	return jsonify(return_dict)
@@ -260,7 +260,6 @@ def get_itemprofit(option):
 		service_array.append(i.getDict())
 	
 	for i in item_list.values():
-		print('item i ',i)
 		item_array.append(i.getDict())
 	
 	return_dict['service']=service_array
