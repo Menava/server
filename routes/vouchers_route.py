@@ -151,7 +151,7 @@ def get_sales(option):
 	revenue=0
 	etotal=0
 	gtotal=0
-	return_dict={'num of sales':'','income':'','revenue':'','total expense':'','general purchase':'','emp salary':''}
+	return_dict={'num of sales':'','income':'','revenue':'','total expense':'','general purchase':'','emp salary':'','gp_chart':''}
 	if(option=='today'):
 		query_result=db.session.query(Vouchers,Vouchers_Payment).join(Vouchers_Payment).filter(Vouchers.date==getTodayDate()).all()
 		all_generalpurchases=General_Purchases.query.filter(General_Purchases.purchase_date==getTodayDate()).all()
@@ -179,7 +179,6 @@ def get_sales(option):
 	for i in all_employeePay:
 		etotal+=i.salary_amount
 
-	print('gp',gp_groupby)
 	total_expense=etotal+gtotal
 	income=revenue-total_expense
 
@@ -190,6 +189,7 @@ def get_sales(option):
 	return_dict['income']=income
 	return_dict['general purchase']=gtotal
 	return_dict['emp salary']=etotal
+	return_dict['gp_chart']=gp_groupby
 	
 	return jsonify(return_dict)
 
