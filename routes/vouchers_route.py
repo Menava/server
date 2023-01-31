@@ -268,6 +268,7 @@ def get_itemprofit(option):
 	return_dict['item total']=item_total
 	return_dict['item profit total']=item_ProfitTotal
 	
+	print('return 1',return_dict)
 	return jsonify(return_dict)
 
 class Service_collection():
