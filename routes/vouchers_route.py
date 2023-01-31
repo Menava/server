@@ -150,7 +150,7 @@ def get_sales(option):
 	revenue=0
 	etotal=0
 	gtotal=0
-	return_dict={'num of sales':'','revenue':'','total expense':''}
+	return_dict={'num of sales':'','income':'','revenue':'','total expense':''}
 	if(option=='today'):
 		query_result=db.session.query(Vouchers,Vouchers_Payment).join(Vouchers_Payment).filter(Vouchers.date==getTodayDate()).all()
 		all_generalpurchases=General_Purchases.query.filter(General_Purchases.purchase_date==getTodayDate()).all()
@@ -164,6 +164,7 @@ def get_sales(option):
 		query_result=db.session.query(Vouchers,Vouchers_Payment).join(Vouchers_Payment).filter(Vouchers.date>getTodayDate() - getTimeWindow('month')).all()
 		all_generalpurchases=General_Purchases.query.filter(General_Purchases.purchase_date>getTodayDate() - getTimeWindow('month')).all()
 		all_employeePay=Employees_Payroll.query.filter(Employees_Payroll.paid_date>getTodayDate() - getTimeWindow('month')).all()
+	
 	for voucher,voucherPayment in query_result:
 		voucher.total=voucherPayment.paid_amount
 		revenue+=voucher.total
@@ -176,10 +177,14 @@ def get_sales(option):
 		etotal+=i.salary_amount
 
 	total_expense=etotal+gtotal
+	income=revenue-total_expense
+
 	
 	return_dict['revenue']=revenue
 	return_dict['num of sales']=voucher_count
 	return_dict['total expense']=total_expense
+	return_dict['icome']=income
+	
 	return jsonify(return_dict)
 
 @voucher_route.route('/itemprofit/<option>', methods=['GET'])
@@ -244,6 +249,7 @@ def get_itemprofit(option):
 		service_array.append(i.getDict())
 	
 	for i in item_list.values():
+		print('item i ',i)
 		item_array.append(i.getDict())
 	
 	return_dict['service']=service_array
