@@ -19,7 +19,7 @@ def get_itemPurchases():
         itemPurchase_result["item_id"]=item_result
         itemPurchase_result["item_payment"]=itemPayment_result
         itemPurchase_array.append(itemPurchase_result)
-    itemPurchase_array.sort(key=itemPurchase_result['purchase_date'])
+    itemPurchase_array.sort(key=get_PurchaseDate)
     return jsonify(itemPurchase_array)
 
 @itempurchases_route.route('/item_purchase/get/<id>/',methods=['GET'])
@@ -115,3 +115,6 @@ def checkItemPurchase(item_id):
         querys=Items_Purchase.query.all() 
         itemPurchase=Items_Purchase.query.filter(Items_Purchase.item_id==item_id).order_by(Items_Purchase.id.desc()).first()
     return itemPurchase
+
+def get_PurchaseDate(e):
+    return e['purchase_date']
