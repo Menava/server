@@ -19,7 +19,7 @@ def get_itemPurchases():
         itemPurchase_result["item_id"]=item_result
         itemPurchase_result["item_payment"]=itemPayment_result
         itemPurchase_array.append(itemPurchase_result)
-    print(itemPurchase_array)
+    itemPurchase_array.sort(key=itemPurchase_result['purchase_date'])
     return jsonify(itemPurchase_array)
 
 @itempurchases_route.route('/item_purchase/get/<id>/',methods=['GET'])
