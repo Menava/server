@@ -126,24 +126,19 @@ def get_customervoucher(customerID):
 			voucher_array.append(voucher_result)
 	return jsonify(voucher_array)
 
-@voucher_route.route('/dashboard', methods=['GET'])
+@voucher_route.route('/voucher/sales/weekly', methods=['GET'])
 def get_dashboard():
-	services_array=[]
-	total_sale=0
-	voucher_Date=date(year=int(2022),month=int(12),day=int(17))
-	query_vouchers=Vouchers.query.filter(Vouchers.date==voucher_Date).all()
-	for voucher_result in query_vouchers:
-		voucher=voucher_schema.dump(voucher_result)
-		voucher_details_result=db.session.query(Services_items,Services,Items).filter(Vouchers_servicesitems.voucher_id==voucher["id"]).join(Vouchers_servicesitems,Services).outerjoin(Items).all()
-		# print(voucher_details_result)
-		for voucher_detail_result,service,item in voucher_details_result:
-			voucher_detail=serviceItem_schema.dump(voucher_detail_result)
-			service_result=service_schema.dump(service)
-			item_result=item_schema.dump(item)
-			print(voucher_detail)
-			print(service_result,item_result)
-				# services_array.append(voucher_detail)
-	return jsonify('Test')
+	return_dict={'Vouche Weekly Chart':''}
+	voucherChart_array=[]
+	vChart_data={}
+	voucher_groupby=db.session.query(Vouchers.date,func.sum(Vouchers.total).label('Total')).filter(Vouchers.date>getTodayDate() - getTimeWindow('week')).group_by(General_Purchases.purchase_type).all()
+	for i in voucher_groupby:
+		vChart_data["Date"]=i[0]
+		vChart_data['Total']=i[1]
+		voucherChart_array.append(vChart_data.copy())
+	
+	return_dict['Vouche Weekly Chart']=voucherChart_array
+	return jsonify(return_dict)
 
 @voucher_route.route('/voucher/sales/<option>',methods=['GET'])
 def get_sales(option):
@@ -169,6 +164,11 @@ def get_sales(option):
 		all_generalpurchases=General_Purchases.query.filter(General_Purchases.purchase_date>getTodayDate() - getTimeWindow('month')).all()
 		all_employeePay=Employees_Payroll.query.filter(Employees_Payroll.paid_date>getTodayDate() - getTimeWindow('month')).all()
 		gp_groupby=db.session.query(General_Purchases.purchase_type,func.sum(General_Purchases.total).label('Total')).filter(General_Purchases.purchase_date>getTodayDate() - getTimeWindow('month')).group_by(General_Purchases.purchase_type).all()
+	if(option=='all'):
+		query_result=db.session.query(Vouchers,Vouchers_Payment).join(Vouchers_Payment).all()
+		all_generalpurchases=General_Purchases.query.all()
+		all_employeePay=Employees_Payroll.query.all()
+		gp_groupby=db.session.query(General_Purchases.purchase_type,func.sum(General_Purchases.total).label('Total')).group_by(General_Purchases.purchase_type).all()
 	
 	for voucher,voucherPayment in query_result:
 		voucher.total=voucherPayment.paid_amount
@@ -222,6 +222,8 @@ def get_itemprofit(option):
 		vouchers_result=Vouchers.query.filter(Vouchers.date>getTodayDate() - getTimeWindow('week')).all()
 	if(option=='month'):
 		vouchers_result=Vouchers.query.filter(Vouchers.date>getTodayDate() - getTimeWindow('month')).all()
+	if(option=='all'):
+		vouchers_result=Vouchers.query.all()
 	for voucher in vouchers_result:
 		voucher_total+=voucher.total
 		service_detail=loop_serviceItem(voucher.id)
