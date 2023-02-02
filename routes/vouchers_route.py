@@ -133,6 +133,7 @@ def get_dashboard():
 	vChart_data={}
 	voucher_groupby=db.session.query(Vouchers.date,func.sum(Vouchers.total).label('Total')).filter(Vouchers.date>getTodayDate() - getTimeWindow('week')).group_by(Vouchers.date).all()
 	for i in voucher_groupby:
+		print('date',i[0])
 		vChart_data["Date"]=i[0]
 		vChart_data['Total']=i[1]
 		voucherChart_array.append(vChart_data.copy())
