@@ -34,5 +34,6 @@ from .voucherServiceItems_route import voucherServiceItem_route
 from .voucherOutsources_route import voucherOutsources_route
 
 from .generalpurchases_route import generalpurchase_route
+from .generalincomes_route import generalincome_route
 from .googleService_route import googleService_route
 from .notification_route import notification_route
