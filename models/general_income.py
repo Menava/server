@@ -2,7 +2,7 @@ from server import db,ma
 from ..extensions import db,ma,getTodayDate
 
 class General_Incomes(db.Model):
-    __tablename__ = 'general_purchase'
+    __tablename__ = 'general_income'
     id=db.Column(db.Integer,primary_key=True)
     description=db.Column(db.String(150))
     amount=db.Column(db.Float)
