@@ -150,7 +150,7 @@ def get_sales(option):
 	vsource_total=0
 	gpChart_array=[]
 	gp_data={}
-	return_dict={'num of sales':'','income':'','revenue':'','total expense':'','general purchase':'','emp salary':'','gp_chart':'','Company Value':'3000','outsource total':''}
+	return_dict={'num of sales':'','income':'','revenue':'','total expense':'','general purchase':'','emp salary':'','gp_chart':'','Company Value':'3000'}
 	if(option=='today'):
 		query_result=db.session.query(Vouchers,Vouchers_Payment).join(Vouchers_Payment).filter(Vouchers.date==getTodayDate()).all()
 		all_voucherOutsources=Vouchers_outsources.query.filter(Vouchers_outsources.paid_date==getTodayDate(),Vouchers_outsources.status==True).all()
