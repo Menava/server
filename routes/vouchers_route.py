@@ -202,7 +202,6 @@ def get_sales(option):
 	return_dict['total expense']=total_expense
 	return_dict['income']=income
 	return_dict['general purchase']=gtotal
-	return_dict['outsource total']=vsource_total
 	return_dict['emp salary']=etotal
 	return_dict['gp_chart']=gpChart_array
 	
