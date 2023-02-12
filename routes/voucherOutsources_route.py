@@ -41,7 +41,7 @@ def update_voucheroutsource(id):
     if(vsource.status==False):
         vsource.status=True
         vsource.paid_date=getTodayDate()
-    if(vsource.status==True):
+    else if(vsource.status==True):
         vsource.status=False
         vsource.paid_date=None
     
