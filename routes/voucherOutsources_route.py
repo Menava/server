@@ -38,6 +38,13 @@ def add_voucheroutsource():
 def update_voucheroutsource(id):
     vsource=Vouchers_outsources.query.get(id)
 
+    if(vsource.status==True):
+        vsource.status=False
+    else:
+        vsource.status=True
+    
+    db.session.commit()
+
 @voucherOutsources_route.route('/voucheroutsource/delete/<id>/',methods=['DELETE'])
 def delete_voucheroutsource(id):
     pass
