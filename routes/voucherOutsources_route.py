@@ -45,6 +45,8 @@ def update_voucheroutsource(id):
     
     db.session.commit()
 
+    return jsonify(vsource)
+
 @voucherOutsources_route.route('/voucheroutsource/delete/<id>/',methods=['DELETE'])
 def delete_voucheroutsource(id):
     pass
