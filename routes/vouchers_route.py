@@ -202,8 +202,9 @@ def get_sales(option):
 	for i in all_voucherOutsources:
 		vsource_total+=i.total
 
+	revenue+=gincome_total
 	total_expense=etotal+gtotal+vsource_total
-	income=revenue+gincome_total-total_expense
+	income=revenue-total_expense
 
 	
 	return_dict['revenue']=revenue
