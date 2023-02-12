@@ -1,5 +1,5 @@
 from flask import jsonify,request,render_template,redirect,Blueprint
-from ..extensions import db
+from ..extensions import db,getTodayDate
 from ..models.voucher import Vouchers,voucher_schema,vouchers_schema
 from ..models.voucher_outsource import Vouchers_outsources,voucheroutsource_schema,voucheroutsources_schema
 
@@ -38,10 +38,12 @@ def add_voucheroutsource():
 def update_voucheroutsource(id):
     vsource=Vouchers_outsources.query.get(id)
 
+    if(vsource.status==False):
+        vsource.status=True
+        vsource.paid_date=getTodayDate()
     if(vsource.status==True):
         vsource.status=False
-    else:
-        vsource.status=True
+        vsource.paid_date=None
     
     db.session.commit()
 
