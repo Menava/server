@@ -4,6 +4,7 @@ from ..models.voucher import Vouchers,voucher_schema,vouchers_schema
 from ..models.voucher_outsource import Vouchers_outsources,voucheroutsource_schema,voucheroutsources_schema
 from ..models.service import Services,service_schema,services_schema
 from ..models.voucher_serviceitem import Vouchers_servicesitems,voucherServiceItem_schema,voucherServiceItems_schema
+from ..models.voucher_outsource import Vouchers_outsources,voucheroutsource_schema,voucheroutsources_schema
 from ..routes.serviceplaceServiceItems_route import loop_serviceItem
 from ..models.voucher_payment import Vouchers_Payment,voucherPayment_schema,voucherPayments_schema
 from ..models.service_item import Services_items,serviceItem_schema,serviceItems_schema
@@ -28,10 +29,6 @@ voucher_route=Blueprint('voucher_route',__name__)
 
 @voucher_route.route('/voucher/get',methods=['GET'])
 def get_vouchers():
-	# all_vouchers=Vouchers.query.all()
-	# results=vouchers_schema.dump(all_vouchers)
-	# return jsonify(results)
-
 	customerCar_array={"customer":"","car":""}
 	voucher_array=[]
 
@@ -148,26 +145,31 @@ def get_sales(option):
 	revenue=0
 	etotal=0
 	gtotal=0
+	vsource_total=0
 	gpChart_array=[]
 	gp_data={}
-	return_dict={'num of sales':'','income':'','revenue':'','total expense':'','general purchase':'','emp salary':'','gp_chart':'','Company Value':'3000'}
+	return_dict={'num of sales':'','income':'','revenue':'','total expense':'','general purchase':'','emp salary':'','gp_chart':'','Company Value':'3000','outsource total':''}
 	if(option=='today'):
 		query_result=db.session.query(Vouchers,Vouchers_Payment).join(Vouchers_Payment).filter(Vouchers.date==getTodayDate()).all()
+		all_voucherOutsources=Vouchers_outsources.query.filter(Vouchers_outsources.paid_date==getTodayDate(),Vouchers_outsources.status==True).all()
 		all_generalpurchases=General_Purchases.query.filter(General_Purchases.purchase_date==getTodayDate()).all()
 		all_employeePay=Employees_Payroll.query.filter(Employees_Payroll.paid_date==getTodayDate()).all()
 		gp_groupby=db.session.query(General_Purchases.purchase_type,func.sum(General_Purchases.total).label('Total')).filter(General_Purchases.purchase_date==getTodayDate()).group_by(General_Purchases.purchase_type).all()
 	if(option=='week'):
 		query_result=db.session.query(Vouchers,Vouchers_Payment).join(Vouchers_Payment).filter(Vouchers.date>getTodayDate() - getTimeWindow('week')).all()
+		all_voucherOutsources=Vouchers_outsources.query.filter(Vouchers_outsources.paid_date>getTodayDate()- getTimeWindow('week'),Vouchers_outsources.status==True).all()
 		all_generalpurchases=General_Purchases.query.filter(General_Purchases.purchase_date>getTodayDate() - getTimeWindow('week')).all()
 		all_employeePay=Employees_Payroll.query.filter(Employees_Payroll.paid_date>getTodayDate() - getTimeWindow('week')).all()
 		gp_groupby=db.session.query(General_Purchases.purchase_type,func.sum(General_Purchases.total).label('Total')).filter(General_Purchases.purchase_date>getTodayDate() - getTimeWindow('week')).group_by(General_Purchases.purchase_type).all()
 	if(option=='month'):
 		query_result=db.session.query(Vouchers,Vouchers_Payment).join(Vouchers_Payment).filter(Vouchers.date>getTodayDate() - getTimeWindow('month')).all()
+		all_voucherOutsources=Vouchers_outsources.query.filter(Vouchers_outsources.paid_date>getTodayDate() - getTimeWindow('month'),Vouchers_outsources.status==True).all()
 		all_generalpurchases=General_Purchases.query.filter(General_Purchases.purchase_date>getTodayDate() - getTimeWindow('month')).all()
 		all_employeePay=Employees_Payroll.query.filter(Employees_Payroll.paid_date>getTodayDate() - getTimeWindow('month')).all()
 		gp_groupby=db.session.query(General_Purchases.purchase_type,func.sum(General_Purchases.total).label('Total')).filter(General_Purchases.purchase_date>getTodayDate() - getTimeWindow('month')).group_by(General_Purchases.purchase_type).all()
 	if(option=='all'):
 		query_result=db.session.query(Vouchers,Vouchers_Payment).join(Vouchers_Payment).all()
+		all_voucherOutsources=Vouchers_outsources.query.filter(Vouchers_outsources.status==True).all()
 		all_generalpurchases=General_Purchases.query.all()
 		all_employeePay=Employees_Payroll.query.all()
 		gp_groupby=db.session.query(General_Purchases.purchase_type,func.sum(General_Purchases.total).label('Total')).group_by(General_Purchases.purchase_type).all()
@@ -187,8 +189,11 @@ def get_sales(option):
 		gp_data["Category"]=i[0]
 		gp_data['Total']=i[1]
 		gpChart_array.append(gp_data.copy())
+	
+	for i in all_voucherOutsources:
+		vsource_total+=i.total
 
-	total_expense=etotal+gtotal
+	total_expense=etotal+gtotal+vsource_total
 	income=revenue-total_expense
 
 	
@@ -197,6 +202,7 @@ def get_sales(option):
 	return_dict['total expense']=total_expense
 	return_dict['income']=income
 	return_dict['general purchase']=gtotal
+	return_dict['outsource total']=vsource_total
 	return_dict['emp salary']=etotal
 	return_dict['gp_chart']=gpChart_array
 	
