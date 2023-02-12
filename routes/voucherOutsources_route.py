@@ -8,7 +8,9 @@ voucherOutsources_route=Blueprint('voucherOutsources_route',__name__)
 
 @voucherOutsources_route.route('/voucheroutsource/get',methods=['GET'])
 def get_voucheroutsources():
-    pass
+    vsources=Vouchers_outsources.query.all()
+	results=voucheroutsources_schema.dump(vsources)
+	return jsonify(results)
 
 @voucherOutsources_route.route('/voucheroutsource/get/<voucher_id>/',methods=['GET'])
 def post_details(voucher_id):
@@ -18,7 +20,6 @@ def post_details(voucher_id):
 
 @voucherOutsources_route.route('/voucheroutsource/add/',methods=['POST'])
 def add_voucheroutsource():
-    print("--------------------------------")
     voucher_id=request.json['voucher_id']
     item_name=request.json['item_name']
     source_name=request.json['source_name']
@@ -35,7 +36,7 @@ def add_voucheroutsource():
 
 @voucherOutsources_route.route('/voucheroutsource/update/<id>/',methods=['PUT'])
 def update_voucheroutsource(id):
-    pass
+    vsource=Vouchers_outsources.query.get(id)
 
 @voucherOutsources_route.route('/voucheroutsource/delete/<id>/',methods=['DELETE'])
 def delete_voucheroutsource(id):

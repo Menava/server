@@ -5,8 +5,8 @@ from ..extensions import db,ma,getTodayDate
 class Vouchers(db.Model):
     id=db.Column(db.Integer,primary_key=True)
     customerCar_id=db.Column(db.Integer,db.ForeignKey('customer_car.id'),nullable=False)
-    initChecklist_id=db.Column(db.Integer,db.ForeignKey('init_checklist.id'))
-    finalChecklist_id=db.Column(db.Integer,db.ForeignKey('final_checklist.id'))
+    initChecklist_id=db.Column(db.Integer,db.ForeignKey('init_checklist.id'),nullable=True)
+    finalChecklist_id=db.Column(db.Integer,db.ForeignKey('final_checklist.id'),nullable=True)
     date=db.Column(db.Date,default=getTodayDate())
     total=db.Column(db.Float())
 

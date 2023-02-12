@@ -8,19 +8,21 @@ class General_Purchases(db.Model):
     unit_price=db.Column(db.Float)
     quantity=db.Column(db.Integer)
     purchase_type=db.Column(db.String(20))
+    business_type=db.Column(db.String(20))
     total=db.Column(db.Float)
     purchase_date=db.Column(db.Date,default=getTodayDate())
 
-    def __init__(self,description,unit_price,quantity,purchase_type,total):
+    def __init__(self,description,unit_price,quantity,purchase_type,business_type,total):
         self.description=description
         self.unit_price=unit_price
         self.quantity=quantity
         self.purchase_type=purchase_type
+        self.business_type=business_type
         self.total=total
 
 class GeneralPurchase_schema(ma.Schema):
     class Meta:
-        fields=('id','description','unit_price','quantity','purchase_type','total','purchase_date')
+        fields=('id','description','unit_price','quantity','purchase_type','business_type','total','purchase_date')
 
 generalPurchase_schema=GeneralPurchase_schema()
 generalPurchases_schema=GeneralPurchase_schema(many=True)

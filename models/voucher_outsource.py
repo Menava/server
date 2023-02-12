@@ -9,6 +9,7 @@ class Vouchers_outsources(db.Model):
     quantity=db.Column(db.Integer)
     price=db.Column(db.Float)
     total=db.Column(db.Float)
+    status=db.Column(db.Boolean,default=False)
     vouchers=db.relationship('Vouchers',backref='vouchers_outsources')
     
     def __init__(self,voucher_id,item_name,source_name,quantity,price,total):
@@ -21,7 +22,7 @@ class Vouchers_outsources(db.Model):
 
 class VoucherOutsource_schema(ma.Schema):
     class Meta:
-        fields=('id','voucher_id','item_name','source_name','quantity','price','total')
+        fields=('id','voucher_id','item_name','source_name','quantity','price','total','status')
 
 voucheroutsource_schema=VoucherOutsource_schema()
 voucheroutsources_schema=VoucherOutsource_schema(many=True)
