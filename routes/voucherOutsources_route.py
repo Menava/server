@@ -9,8 +9,8 @@ voucherOutsources_route=Blueprint('voucherOutsources_route',__name__)
 @voucherOutsources_route.route('/voucheroutsource/get',methods=['GET'])
 def get_voucheroutsources():
     vsources=Vouchers_outsources.query.all()
-	results=voucheroutsources_schema.dump(vsources)
-	return jsonify(results)
+    results=voucheroutsources_schema.dump(vsources)
+    return jsonify(results)
 
 @voucherOutsources_route.route('/voucheroutsource/get/<voucher_id>/',methods=['GET'])
 def post_details(voucher_id):
