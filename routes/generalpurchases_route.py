@@ -27,13 +27,11 @@ def add_generalpurchase():
     unit_price=request.json['unit_price']
     quantity=request.json['quantity']
     purchase_type=request.json['purchase_type']
-    
-    print(type(unit_price))
-    print(type(quantity))
+    business_type=request.json['business_type']
 
     total=unit_price*quantity
 
-    generalPurchase=General_Purchases(description,unit_price,quantity,purchase_type,total)
+    generalPurchase=General_Purchases(description,unit_price,quantity,purchase_type,business_type,total)
     db.session.add(generalPurchase)
     db.session.commit()
     return generalPurchase_schema.jsonify(generalPurchase)
@@ -46,12 +44,14 @@ def update_generalpurchase(id):
     unit_price=request.json['unit_price']
     quantity=request.json['quantity']
     purchase_type=request.json['purchase_type']
+    business_type=request.json['business_type']
 
     gp.description=description
     gp.unit_price=unit_price
     gp.quantity=quantity
     gp.total=int(unit_price)*int(quantity)
     gp.purchase_type=purchase_type
+    gp.business_type=business_type
 
     db.session.commit()
     return generalPurchase_schema.jsonify(gp)
