@@ -120,7 +120,7 @@ def get_PurchaseDate(e):
 
 @itempurchases_route.route('/item_purchase/test/<id>',methods=['GET'])
 def getItemPurchase(id):
-    result=session.query(Items_Purchase).filter(Items_Purchase.item_id==id).order_by(Items_Purchase.id.desc()).limit(2)
+    result=db.session.query(Items_Purchase).filter(Items_Purchase.item_id==id).order_by(Items_Purchase.id.desc()).limit(2)
     print(itemPurchases_schema.dump(result))
 
     return itemPurchases_schema.jsonify(result)
