@@ -122,7 +122,7 @@ def get_PurchaseDate(e):
 def getItemPurchase(id):
     itm_qty=0
     result=db.session.query(Items_Purchase).filter(Items_Purchase.item_id==id).order_by(Items_Purchase.id.desc()).limit(2)
-    print(result[0]{'quantity_received'})
+    print(result[0]['quantity_received'])
         
 
     return itemPurchases_schema.jsonify(result)
