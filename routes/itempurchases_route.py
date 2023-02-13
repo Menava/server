@@ -127,5 +127,5 @@ def getItemPurchase(id):
     # itm_qty=result[0].quantity_received-result[1].refund_quantity
     # print('itm qty',itm_qty)
 
-    return result
+    return jsonify(result)
 
