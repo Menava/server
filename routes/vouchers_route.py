@@ -209,8 +209,8 @@ def get_sales(option):
 		vsource_total+=i.total
 	
 	for item_purchase in all_itemPayments:
-		item_purchase['quantity_received']=getItemPurchase(item_purchase["item_id"])
-		total=item_purchase['quantity_received']*item_purchase['unit_price']
+		item_purchase.quantity_received=getItemPurchase(item_purchase.item_id)
+		total=item_purchase.quantity_received*item_purchase.unit_price
 		purchase_total+=total
 
 	revenue+=gincome_total
