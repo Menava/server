@@ -118,12 +118,3 @@ def checkItemPurchase(item_id):
 def get_PurchaseDate(e):
     return e['purchase_date']
 
-@itempurchases_route.route('/item_purchase/test/<id>',methods=['GET'])
-def getItemPurchase(id):
-    itm_qty=0
-    result=db.session.query(Items_Purchase).filter(Items_Purchase.item_id==id).order_by(Items_Purchase.id.desc()).limit(2)
-    itm_qty=result[0].quantity_received-result[1].refund_quantity
-    print('itm qty',itm_qty)
-
-    return itemPurchases_schema.jsonify(result)
-
