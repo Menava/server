@@ -118,7 +118,7 @@ def checkItemPurchase(item_id):
 def get_PurchaseDate(e):
     return e['purchase_date']
 
-@itempurchases_route.route('/item_purchase/test',methods=['GET'])
+@itempurchases_route.route('/item_purchase/test/<id>',methods=['GET'])
 def getItemPurchase(id):
     result=session.query(Items_Purchase).filter(Items_Purchase.item_id==id).order_by(Items_Purchase.id.desc()).limit(2)
     print(itemPurchases_schema.dump(result))
