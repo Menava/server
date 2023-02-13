@@ -183,7 +183,7 @@ def get_sales(option):
 		all_generalpurchases=General_Purchases.query.all()
 		all_generalincomes=General_Incomes.query.all()
 		all_employeePay=Employees_Payroll.query.all()
-		all_itemPayments=db.session.query(Items_Purchase,Items).query.filter(Items_Purchase.status==False).join(Items).all()
+		all_itemPayments=db.session.query(Items_Purchase,Items).filter(Items_Purchase.status==False).join(Items).all()
 		gp_groupby=db.session.query(General_Purchases.purchase_type,func.sum(General_Purchases.total).label('Total')).group_by(General_Purchases.purchase_type).all()
 	
 	for voucher,voucherPayment in query_result:
