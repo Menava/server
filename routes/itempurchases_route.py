@@ -123,7 +123,7 @@ def getItemPurchase(id):
     itm_qty=0
     result=db.session.query(Items_Purchase,Items).filter(Items_Purchase.item_id==id).join(Items).order_by(Items_Purchase.id.desc()).limit(2)
     for i in result:
-        print(result)
+        print(i)
     # itm_qty=result[0].quantity_received-result[1].refund_quantity
     # print('itm qty',itm_qty)
 
