@@ -33,8 +33,7 @@ def reset_database(option):
     db.drop_all()
     db.create_all()
     if(option=="withdata"):
-        print('here')
-        sql_file=open(r"/home/genshinimpact1234/mysite/server/others/sql.text",'r')
+        sql_file=open(r"/home/genshinimpact1234/mysite/server/others/sample_data.text",'r')
         for line in sql_file:
             if not line.startswith('--') and line.strip('\n'):
                 sql_command += line.strip('\n')
