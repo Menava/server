@@ -1,7 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 
-from flask_socketio import SocketIO
 from flask_session import Session
 
 from datetime import date, datetime, timedelta
@@ -11,8 +10,6 @@ db=SQLAlchemy()
 ma=Marshmallow()
 
 tz = pytz.timezone('Asia/Yangon')
-# socketio = SocketIO()
-# sess=Session()
 
 def getTodayDate():
     dt = datetime.now(tz)
