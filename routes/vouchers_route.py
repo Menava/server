@@ -132,8 +132,6 @@ def get_dashboard():
 	vChart_data={}
 	voucher_groupby=db.session.query(Vouchers.date,func.sum(Vouchers.total).label('Total')).filter(Vouchers.date>getTodayDate() - getTimeWindow('week')).group_by(Vouchers.date).all()
 	for i in voucher_groupby:
-		print('date',i[0])
-		print('format date',date(i[0].year, i[0].month, i[0].day))
 		vChart_data["Date"]=i[0]
 		vChart_data['Total']=i[1]
 		voucherChart_array.append(vChart_data.copy())
@@ -228,7 +226,6 @@ def get_sales(option):
 	return_dict['gp_chart']=gpChart_array
 	return_dict['Investment']=purchase_total
 	
-	print('return_dict',return_dict)
 	return jsonify(return_dict)
 
 @voucher_route.route('/itemprofit/<option>', methods=['GET'])
@@ -303,7 +300,6 @@ def get_itemprofit(option):
 	return_dict['item total']=item_total
 	return_dict['item profit total']=item_ProfitTotal
 	
-	print('return 1',return_dict)
 	return jsonify(return_dict)
 
 def getItemPurchase(id):
