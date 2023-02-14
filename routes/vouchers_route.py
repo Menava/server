@@ -305,12 +305,10 @@ def get_itemprofit(option):
 def getItemPurchase(id):
 	itm_qty=0
 	result=db.session.query(Items_Purchase).filter(Items_Purchase.item_id==id).order_by(Items_Purchase.id.desc()).limit(2)
-	for i in result:
-		print("Item purchase",itemPurchase_schema.dump(i))
-	# if(len(result)==1):
-	# 	itm_qty=result.quantity_received
-	# else:
-	# 	itm_qty=result[0].quantity_received-result[1].refund_quantity
+	if((query.count())!=2):
+		itm_qty=result.quantity_received
+	else:
+		itm_qty=result[0].quantity_received-result[1].refund_quantity
 
 	return itm_qty
 
