@@ -10,14 +10,14 @@ import pytz
 db=SQLAlchemy()
 ma=Marshmallow()
 
-# tz = pytz.timezone('Asia/Myanmar')
+tz = pytz.timezone('Asia/Yangon')
 # socketio = SocketIO()
 # sess=Session()
 
 def getTodayDate():
     dt = datetime.now()
-    # myanmar_now = datetime.now(tz)
-    print(pytz.all_timezones)
+    myanmar_now = datetime.now(tz)
+    print(myanmar_now)
     d_truncated = date(dt.year, dt.month, dt.day)
     return d_truncated
 
