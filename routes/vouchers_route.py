@@ -305,7 +305,7 @@ def get_itemprofit(option):
 def getItemPurchase(id):
 	itm_qty=0
 	result=db.session.query(Items_Purchase).filter(Items_Purchase.item_id==id).order_by(Items_Purchase.id.desc()).limit(2)
-	print(len(result))
+	print("reuslt len",len(result))
 	# for i in result:
 	# 	print(itemPurchase_schema.dump(i))
 	# if(len(result)==1):
