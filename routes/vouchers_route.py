@@ -235,7 +235,7 @@ def getItemPurchase(all_itemPayments,option):
 		purchase_total+=total
 	return purchase_total
 
-def getItemQty(id,option)
+def getItemQty(id,option):
 	result=db.session.query(Items_Purchase).filter(Items_Purchase.item_id==id).order_by(Items_Purchase.id.desc()).limit(2)
 	if((result.count())!=2):
 		itm_qty=result[0].quantity_received
