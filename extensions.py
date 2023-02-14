@@ -17,7 +17,7 @@ tz = pytz.timezone('Asia/Myanmar')
 def getTodayDate():
     dt = datetime.now()
     myanmar_now = datetime.now(tz)
-    print(myanmar_now)
+    print(pytz.all_timezones)
     d_truncated = date(dt.year, dt.month, dt.day)
     return d_truncated
 
