@@ -15,9 +15,7 @@ tz = pytz.timezone('Asia/Yangon')
 # sess=Session()
 
 def getTodayDate():
-    dt = datetime.now()
-    myanmar_now = datetime.now(tz)
-    print(myanmar_now)
+    dt = datetime.now(tz)
     d_truncated = date(dt.year, dt.month, dt.day)
     return d_truncated
 
@@ -28,7 +26,6 @@ def getTimeWindow(option):
         return timedelta(days=30)
 
 def getTargetDate(targetMonth=0,targetDay=0):
-    print(targetMonth,targetDay)
-    dt = datetime.now()
+    dt = datetime.now(tz)
     targetDate_truncated=date(dt.year, dt.month-targetMonth, dt.day-targetDay)
     return targetDate_truncated
