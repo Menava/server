@@ -228,6 +228,7 @@ def get_sales(option):
 
 def getItemPurchase(all_itemPayments,option):
 	itm_qty=0
+	purchase_total=0
 	for item_purchase,item in all_itemPayments:
 		if(item.refundable==True):
 			item_purchase.quantity_received=getItemQty(item_purchase.item_id,option)
