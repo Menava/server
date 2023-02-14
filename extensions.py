@@ -5,15 +5,19 @@ from flask_socketio import SocketIO
 from flask_session import Session
 
 from datetime import date, datetime, timedelta
+import pytz
 
 db=SQLAlchemy()
 ma=Marshmallow()
 
+tz = pytz.timezone('Asia/Myanmar')
 # socketio = SocketIO()
 # sess=Session()
 
 def getTodayDate():
     dt = datetime.now()
+    myanmar_now = datetime.now(tz)
+    print(myanmar_now)
     d_truncated = date(dt.year, dt.month, dt.day)
     return d_truncated
 
