@@ -273,7 +273,7 @@ def getItemQty(id,option):
 	return total_qty
 
 def sortResult(e):
-	return e['id']
+	return e.id
 
 @voucher_route.route('/itemprofit/<option>', methods=['GET'])
 def get_itemprofit(option):
