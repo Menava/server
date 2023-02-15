@@ -250,8 +250,8 @@ def getItemQty(id,option):
 	if(option=='all'):
 		result_count=db.session.query(Items_Purchase).filter(Items_Purchase.item_id==id).count()
 	
-	results=db.session.query(Items_Purchase).filter(Items_Purchase.item_id==id).order_by(Items_Purchase.id.desc()).limit(result_count+1).all()
-	results.sort(reverse=True,key=sortResult)
+	org_results=db.session.query(Items_Purchase).filter(Items_Purchase.item_id==id).order_by(Items_Purchase.id.desc()).limit(result_count+1).all()
+	results=org_results.sort(reverse=True,key=sortResult)
 	print('query',itemPurchases_schema.dump(results))
 	print('result 0 qty',results[0].refund_quantity)
 	print('result 0 ',results[0])
