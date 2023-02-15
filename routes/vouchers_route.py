@@ -241,21 +241,17 @@ def getItemQty(id,option):
 	total_price=0
 	prev_qty=0
 	loop_count=0
-	print('option',option)
 	if(option=='today'):
 		result_count=db.session.query(Items_Purchase).filter(Items_Purchase.item_id==id).filter(Items_Purchase.purchase_date==getTodayDate()).count()
-		print('result_count',result_count)
-		results=db.session.query(Items_Purchase).filter(Items_Purchase.item_id==id,Items_Purchase.purchase_date==getTodayDate()).order_by(Items_Purchase.id.desc()).limit(result_count+1).all()
 	if(option=='week'):
-		result_count=db.session.query(Items_Purchase).filter(Items_Purchase.item_id==id).filter(Items_Purchase.purchase_date>getTodayDate() - getTimeWindow('week')).order_by(Items_Purchase.id.desc()).count()
-		results=db.session.query(Items_Purchase).filter(Items_Purchase.item_id==id,Items_Purchase.purchase_date>getTodayDate() - getTimeWindow('week')).order_by(Items_Purchase.id.desc()).limit(result_count+1).all()
+		result_count=db.session.query(Items_Purchase).filter(Items_Purchase.item_id==id).filter(Items_Purchase.purchase_date>getTodayDate() - getTimeWindow('week')).count()
 	if(option=='month'):
-		result_count=db.session.query(Items_Purchase).filter(Items_Purchase.item_id==id).filter(Items_Purchase.purchase_date>getTodayDate() - getTimeWindow('month')).order_by(Items_Purchase.id.desc()).count()
-		results=db.session.query(Items_Purchase).filter(Items_Purchase.item_id==id,Items_Purchase.purchase_date>getTodayDate() - getTimeWindow('month')).order_by(Items_Purchase.id.desc()).limit(result_count+1).all()
+		result_count=db.session.query(Items_Purchase).filter(Items_Purchase.item_id==id).filter(Items_Purchase.purchase_date>getTodayDate() - getTimeWindow('month')).count()
 	if(option=='all'):
-		result_count=db.session.query(Items_Purchase).filter(Items_Purchase.item_id==id).order_by(Items_Purchase.id.desc()).count()
-		results=db.session.query(Items_Purchase).filter(Items_Purchase.item_id==id).order_by(Items_Purchase.id.desc()).limit(result_count).all()
+		result_count=db.session.query(Items_Purchase).filter(Items_Purchase.item_id==id).count()
 	
+	results=db.session.query(Items_Purchase).filter(Items_Purchase.item_id==id).order_by(Items_Purchase.id.desc()).limit(result_count+1).all()
+	results.sort(reverse=True,key=sortResult)
 	print('query',itemPurchases_schema.dump(results))
 	print('result 0 qty',results[0].refund_quantity)
 	print('result 0 ',results[0])
@@ -273,31 +269,12 @@ def getItemQty(id,option):
 	
 	print('total_price',total_price)
 	print('total_qty',total_qty)
-	
-	# if(result_count>1):
-	# 	pass
-	# else:
-	# 	itm_qty=result[0].quantity_received
-	# if((result.count())!=2):
-	# 	itm_qty=result[0].quantity_received
-	# else:
-	# 	diff_time=result[0].purchase_date-result[1].purchase_date
-	# 	print(diff_time)
-	# 	if(option=='today'):
-	# 		pass
-	# 		# itm_qty=result[0].quantity_received-result[1].refund_quantity
-	# 	if(option=='week'):
-	# 		pass
-	# 	if(option=='month'):
-	# 		pass
-	# 	if(option=='today'):
-	# 		pass
-	# 	if(option=='all'):
-	# 		pass
-	# 	itm_qty=result[0].quantity_received-result[1].refund_quantity
 
 	return total_qty
-	
+
+def sortResult(e):
+	return e['id']
+
 @voucher_route.route('/itemprofit/<option>', methods=['GET'])
 def get_itemprofit(option):
 	service_list={}
