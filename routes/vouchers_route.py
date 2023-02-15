@@ -268,7 +268,7 @@ def getItemQty(id,option):
 
 	print('result_count',len(results))
 	print('result_allcount',result_allcount)
-	if(len(results)==result_allcount):
+	if(result_count==result_allcount):
 		print('count in')
 		total_qty+=results[0].quantity_received
 		total_price+=results[0].quantity_received*results[0].unit_price
