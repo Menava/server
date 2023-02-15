@@ -270,6 +270,10 @@ def getItemQty(id,option):
 	print('total_price',total_price)
 	print('total_qty',total_qty)
 
+	if(option=='all'):
+		total_qty+=results[0].quantity_received
+		total_price+=results[0].quantity_received*results[0].unit_price
+
 	return total_qty
 
 def sortResult(e):
