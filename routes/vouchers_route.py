@@ -256,6 +256,9 @@ def getItemQty(id,option):
 		print('result',itemPurchase_schema.dump(result))
 		result_qty=result.quantity_received-prev_qty
 		result_price=result_qty*result.unit_price
+		print('result_qty',result_qty)
+		print('result_price',result_price)
+		print('prev_qty',prev_qty)
 		total_qty+=result_qty
 		total_price+=result_price
 		prev_qty=result.refund_quantity
