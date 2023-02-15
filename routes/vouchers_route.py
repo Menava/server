@@ -240,11 +240,10 @@ def getItemQty(id,option):
 	itm_qty=0
 	temp_receive=0
 	temp_refund=0
+	loop_count=0
 	result_count=db.session.query(Items_Purchase).filter(Items_Purchase.item_id==id).filter(Items_Purchase.purchase_date>getTodayDate() - getTimeWindow('week')).order_by(Items_Purchase.id.desc()).count()
 	result=db.session.query(Items_Purchase).filter(Items_Purchase.item_id==id).order_by(Items_Purchase.id.desc()).limit(result_count+1).all()
-	print(type(result))
-	for i in result:
-		print('i',itemPurchase_schema.dump(i))
+	print(result)
 		
 	
 	# if((result.count())!=2):
