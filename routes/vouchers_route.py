@@ -237,7 +237,10 @@ def getItemPurchase(all_itemPayments,option):
 	return purchase_total
 
 def getItemQty(id,option):
-	itm_qty=0
+	total_qty=0
+	total_price=0
+	prev_qty=0
+	loop_count=0
 	if(option=='today'):
 		result_count=db.session.query(Items_Purchase).filter(Items_Purchase.item_id==id).filter(Items_Purchase.purchase_date==getTodayDate()).order_by(Items_Purchase.id.desc()).count()
 	if(option=='week'):
@@ -247,9 +250,18 @@ def getItemQty(id,option):
 	if(option=='all'):
 		result_count=db.session.query(Items_Purchase).filter(Items_Purchase.item_id==id).order_by(Items_Purchase.id.desc()).count()
 	
-	results=db.session.query(Items_Purchase).filter(Items_Purchase.item_id==id).order_by(Items_Purchase.id.desc()).limit(result_count+1).all()
-	for result in results:
+	results=db.session.query(Items_Purchase).filter(Items_Purchase.item_id==id).order_by(Items_Purchase.id.asc()).limit(result_count+1).all()
+	prev_qty=results[0].refund_quantity
+	for result in results[1:]:
 		print('result',itemPurchase_schema.dump(result))
+		result_qty=result.quantity_received-prev_qty
+		result_price=result_qty*result.unit_price
+		total_qty+=result_qty
+		total_price+=result_price
+		prev_qty=result.refund_quantity
+	
+	print('total_price',total_price)
+	print('total_qty',total_qty)
 	
 	# if(result_count>1):
 	# 	pass
