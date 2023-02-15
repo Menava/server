@@ -231,9 +231,10 @@ def getItemPurchase(all_itemPayments,option):
 	for item_purchase,item in all_itemPayments:
 		print('item_purchase',itemPurchase_schema.dump(item_purchase))
 		if(item.refundable==True):
-			item_purchase.quantity_received=getItemQty(item_purchase.item_id,option)
-		# total=item_purchase.quantity_received*item_purchase.unit_price
-		# purchase_total+=total
+			item_purchase.quantity_received,total=getItemQty(item_purchase.item_id,option)
+		else:
+			total=item_purchase.quantity_received*item_purchase.unit_price
+		purchase_total+=total
 	return purchase_total
 
 def getItemQty(id,option):
@@ -266,7 +267,7 @@ def getItemQty(id,option):
 		total_qty+=results[0].quantity_received
 		total_price+=results[0].quantity_received*results[0].unit_price
 
-	return total_qty
+	return total_qty,total_price
 
 def sortResult(e):
 	return e.id
