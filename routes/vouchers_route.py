@@ -254,27 +254,21 @@ def getItemQty(id,option):
 	results=db.session.query(Items_Purchase).filter(Items_Purchase.item_id==id).order_by(Items_Purchase.id.desc()).limit(result_count+1).all()
 	results.sort(key=sortResult)
 	print('query',itemPurchases_schema.dump(results))
-	print('result 0 qty',results[0].refund_quantity)
-	print('result 0 ',results[0])
 	prev_qty=results[0].refund_quantity
 	for result in results[1:]:
 		print('result',itemPurchase_schema.dump(result))
 		result_qty=result.quantity_received-prev_qty
 		result_price=result_qty*result.unit_price
-		print('result_qty',result_qty)
-		print('result_price',result_price)
-		print('prev_qty',prev_qty)
 		total_qty+=result_qty
 		total_price+=result_price
 		prev_qty=result.refund_quantity
-	
-	print('total_price',total_price)
-	print('total_qty',total_qty)
 
 	if(result_count==result_allcount):
 		total_qty+=results[0].quantity_received
 		total_price+=results[0].quantity_received*results[0].unit_price
 
+	print('total_price',total_price)
+	print('total_qty',total_qty)
 	return total_qty
 
 def sortResult(e):
