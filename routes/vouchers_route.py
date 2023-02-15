@@ -229,6 +229,7 @@ def get_sales(option):
 def getItemPurchase(all_itemPayments,option):
 	purchase_total=0
 	for item_purchase,item in all_itemPayments:
+		print('-----------------')
 		print('item_purchase',itemPurchase_schema.dump(item_purchase))
 		if(item.refundable==True):
 			item_purchase.quantity_received,total=getItemQty(item_purchase.item_id,option)
