@@ -177,7 +177,7 @@ def get_sales(option):
 		all_employeePay=Employees_Payroll.query.filter(Employees_Payroll.paid_date>getTodayDate() - getTimeWindow('month')).all()
 		all_itemPayments=db.session.query(Items_Purchase,Items).filter(Items_Purchase.purchase_date>getTodayDate() - getTimeWindow('month'),Items_Purchase.status==False).join(Items).all()
 		purchase_total=getItemPurchase(all_itemPayments,option)
-		gp_groupby=db.session.query(General_Purchases.purchase_type,func.sum(General_Purchases.total).label('Total')).filter(General_Purchases.purchase_date>getTodayDate() - getTimeWindow('month'),Items_Purchase.status==False).group_by(General_Purchases.purchase_type).all()
+		gp_groupby=db.session.query(General_Purchases.purchase_type,func.sum(General_Purchases.total).label('Total')).filter(General_Purchases.purchase_date>getTodayDate() - getTimeWindow('month')).group_by(General_Purchases.purchase_type).all()
 	if(option=='all'):
 		query_result=db.session.query(Vouchers,Vouchers_Payment).join(Vouchers_Payment).all()
 		all_voucherOutsources=Vouchers_outsources.query.filter(Vouchers_outsources.status==True).all()
