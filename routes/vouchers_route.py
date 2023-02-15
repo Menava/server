@@ -252,8 +252,8 @@ def getItemQty(id,option):
 	if(option=='all'):
 		result_count=result_allcount
 
-	test_query=db.session.query(Items_Purchase).filter(Items_Purchase.item_id==id).filter(Items_Purchase.purchase_date>getTodayDate() - getTimeWindow('week')).all()
-	print('test_query',test_query)
+	test_query=db.session.query(Items_Purchase).filter(Items_Purchase.item_id==id).filter(Items_Purchase.purchase_date>getTodayDate() - getTimeWindow('month')).all()
+	print('test_query',itemPurchases_schema.dump(test_query))
 	results=db.session.query(Items_Purchase).filter(Items_Purchase.item_id==id).order_by(Items_Purchase.id.desc()).limit(result_count+1).all()
 	results.sort(key=sortResult)
 	print('query',itemPurchases_schema.dump(results))
