@@ -251,6 +251,8 @@ def getItemQty(id,option):
 		result_count=db.session.query(Items_Purchase).filter(Items_Purchase.item_id==id).order_by(Items_Purchase.id.desc()).count()
 	
 	results=db.session.query(Items_Purchase).filter(Items_Purchase.item_id==id).order_by(Items_Purchase.id.asc()).limit(result_count+1).all()
+	print('result 0 qty',results[0].refund_quantity)
+	print('result 0 ',results[0])
 	prev_qty=results[0].refund_quantity
 	for result in results[1:]:
 		print('result',itemPurchase_schema.dump(result))
