@@ -11,7 +11,7 @@ itempurchases_route=Blueprint('itempurchases_route',__name__)
 @itempurchases_route.route('/item_purchase/get',methods=['GET'])
 def get_itemPurchases():
     itemPurchase_array=[]
-    all_itemPurchase=db.session.query(Items_Purchase,Items,Items_Payment).join(Items,Items_Payment).all()
+    all_itemPurchase=db.session.query(Items_Purchase,Items,Items_Payment).join(Items,Items_Payment).order_by(Items_Purchase.purchase_date.desc()).all()
     for item_purchase,item,item_payment in all_itemPurchase:
         itemPurchase_result=itemPurchase_schema.dump(item_purchase)
         item_result=item_schema.dump(item)

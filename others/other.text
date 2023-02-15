@@ -1,0 +1,25 @@
+INSERT INTO `suppliers` (`id`, `name`, `hidden`) VALUES
+(1, 'Test 1', 0),
+(2, 'Test 2', 0);
+
+INSERT INTO `items` (`id`, `name`, `quantity`, `price`, `item_imageName`, `item_imagePath`, `refundable`, `hidden`, `supplier_id`) VALUES
+(1, 'Test Item 1', 18, 110, 'apple_158989157.jpg', '15GnFx_1tWjIHPcL1V86VuXAlfyyTafVF', 1, 0, 1),
+(2, 'Test Item 2', 10, 120, 'apple_158989157.jpg', '13sCXrLkRvpXKTXVD-KRLvDMz-x90sGdy', 0, 0, 2);
+
+INSERT INTO `item_purchase` (`id`, `purchase_date`, `quantity_received`, `refund_quantity`, `unit_price`, `status`, `item_id`) VALUES
+(1, '2023-2-1', 10, 10, 100, 1, 1),
+(2, '2023-2-2', 5, 0, 100, 0, 2),
+(3, '2023-2-12', 5, 0, 100, 0, 2),
+(4, '2023-2-13', 15, 15, 100, 1, 1),
+(5, '2023-2-14', 18, 0, 100, 0, 1);
+
+INSERT INTO `item_payment` (`id`, `payment_date`, `paid_amount`, `purchase_id`) VALUES
+(1, '2023-2-1', 0, 1),
+(2, '2023-2-2', 500, 2),
+(3, '2023-2-12', 500, 3),
+(4, '2023-2-13', 0, 4),
+(5, '2023-2-14', 1800, 5);
+
+INSERT INTO `services` (`id`, `service_type`, `service_imageName`, `service_imagePath`, `service_price`, `service_detail`, `hidden`) VALUES
+(1, 'Test Service 1', 'apple_158989157.jpg', '1FnDkOxrYpYJVmHh_f6PHUJyR9v2MVNa_', 0, 'Engine Oil Change', 0),
+(2, 'Test Service 2', 'apple_158989157.jpg', '1w7mhy9SUkTRnDW7i8JHrKv5kfA5ZFxNC', 10000, 'Test', 0);
