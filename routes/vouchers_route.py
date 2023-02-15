@@ -241,6 +241,8 @@ def getItemQty(id,option):
 	total_price=0
 	prev_qty=0
 	loop_count=0
+
+	result_allcount=db.session.query(Items_Purchase).filter(Items_Purchase.item_id==id).count()
 	if(option=='today'):
 		result_count=db.session.query(Items_Purchase).filter(Items_Purchase.item_id==id).filter(Items_Purchase.purchase_date==getTodayDate()).count()
 	if(option=='week'):
@@ -248,8 +250,7 @@ def getItemQty(id,option):
 	if(option=='month'):
 		result_count=db.session.query(Items_Purchase).filter(Items_Purchase.item_id==id).filter(Items_Purchase.purchase_date>getTodayDate() - getTimeWindow('month')).count()
 	if(option=='all'):
-		result_count=db.session.query(Items_Purchase).filter(Items_Purchase.item_id==id).count()
-	
+		result_count=result_allcount
 	results=db.session.query(Items_Purchase).filter(Items_Purchase.item_id==id).order_by(Items_Purchase.id.desc()).limit(result_count+1).all()
 	results.sort(key=sortResult)
 	print('query',itemPurchases_schema.dump(results))
@@ -270,7 +271,7 @@ def getItemQty(id,option):
 	print('total_price',total_price)
 	print('total_qty',total_qty)
 
-	if(option=='all'):
+	if(result_count==result_allcount):
 		total_qty+=results[0].quantity_received
 		total_price+=results[0].quantity_received*results[0].unit_price
 
