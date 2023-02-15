@@ -238,11 +238,23 @@ def getItemPurchase(all_itemPayments,option):
 
 def getItemQty(id,option):
 	itm_qty=0
-	result_count=db.session.query(Items_Purchase).filter(Items_Purchase.item_id==id).filter(Items_Purchase.purchase_date>getTodayDate() - getTimeWindow('week')).order_by(Items_Purchase.id.desc()).count()
-	result=db.session.query(Items_Purchase).filter(Items_Purchase.item_id==id).order_by(Items_Purchase.id.desc()).limit(result_count+1).all()
-	itm_qty=result[0].quantity_received-result[result_count].refund_quantity
-	print(itm_qty)
+	if(option=='today'):
+		result_count=db.session.query(Items_Purchase).filter(Items_Purchase.item_id==id).filter(Items_Purchase.purchase_date==getTodayDate()).order_by(Items_Purchase.id.desc()).count()
+	if(option=='week'):
+		result_count=db.session.query(Items_Purchase).filter(Items_Purchase.item_id==id).filter(Items_Purchase.purchase_date>getTodayDate() - getTimeWindow('week')).order_by(Items_Purchase.id.desc()).count()
+	if(option=='month'):
+		result_count=db.session.query(Items_Purchase).filter(Items_Purchase.item_id==id).filter(Items_Purchase.purchase_date>getTodayDate() - getTimeWindow('month')).order_by(Items_Purchase.id.desc()).count()
+	if(option=='all'):
+		result_count=db.session.query(Items_Purchase).filter(Items_Purchase.item_id==id).order_by(Items_Purchase.id.desc()).count()
 	
+	results=db.session.query(Items_Purchase).filter(Items_Purchase.item_id==id).order_by(Items_Purchase.id.desc()).limit(result_count+1).all()
+	for result in results:
+		print('result',itemPurchase_schema.dump(result))
+	
+	# if(result_count>1):
+	# 	pass
+	# else:
+	# 	itm_qty=result[0].quantity_received
 	# if((result.count())!=2):
 	# 	itm_qty=result[0].quantity_received
 	# else:

@@ -3,7 +3,7 @@ INSERT INTO `suppliers` (`id`, `name`, `hidden`) VALUES
 (2, 'Test 2', 0);
 
 INSERT INTO `items` (`id`, `name`, `quantity`, `price`, `item_imageName`, `item_imagePath`, `refundable`, `hidden`, `supplier_id`) VALUES
-(1, 'Test Item 1', 18, 110, 'apple_158989157.jpg', '15GnFx_1tWjIHPcL1V86VuXAlfyyTafVF', 1, 0, 1),
+(1, 'Test Item 1', 20, 110, 'apple_158989157.jpg', '15GnFx_1tWjIHPcL1V86VuXAlfyyTafVF', 1, 0, 1),
 (2, 'Test Item 2', 10, 120, 'apple_158989157.jpg', '13sCXrLkRvpXKTXVD-KRLvDMz-x90sGdy', 0, 0, 2);
 
 INSERT INTO `item_purchase` (`id`, `purchase_date`, `quantity_received`, `refund_quantity`, `unit_price`, `status`, `item_id`) VALUES
