@@ -241,6 +241,7 @@ def getItemQty(id,option):
 	total_price=0
 	prev_qty=0
 	loop_count=0
+	print('option',option)
 	if(option=='today'):
 		result_count=db.session.query(Items_Purchase).filter(Items_Purchase.item_id==id).filter(Items_Purchase.purchase_date==getTodayDate()).order_by(Items_Purchase.id.desc()).count()
 	if(option=='week'):
