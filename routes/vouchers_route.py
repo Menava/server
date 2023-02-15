@@ -230,10 +230,11 @@ def getItemPurchase(all_itemPayments,option):
 	itm_qty=0
 	purchase_total=0
 	for item_purchase,item in all_itemPayments:
-		if(item.refundable==True):
-			item_purchase.quantity_received=getItemQty(item_purchase.item_id,option)
-		total=item_purchase.quantity_received*item_purchase.unit_price
-		purchase_total+=total
+		print('item_purchase',itemPurchase_schema.dump(item_purchase))
+		# if(item.refundable==True):
+		# 	item_purchase.quantity_received=getItemQty(item_purchase.item_id,option)
+		# total=item_purchase.quantity_received*item_purchase.unit_price
+		# purchase_total+=total
 	return purchase_total
 
 def getItemQty(id,option):
