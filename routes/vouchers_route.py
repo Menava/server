@@ -238,13 +238,10 @@ def getItemPurchase(all_itemPayments,option):
 
 def getItemQty(id,option):
 	itm_qty=0
-	temp_receive=0
-	temp_refund=0
-	loop_count=0
 	result_count=db.session.query(Items_Purchase).filter(Items_Purchase.item_id==id).filter(Items_Purchase.purchase_date>getTodayDate() - getTimeWindow('week')).order_by(Items_Purchase.id.desc()).count()
 	result=db.session.query(Items_Purchase).filter(Items_Purchase.item_id==id).order_by(Items_Purchase.id.desc()).limit(result_count+1).all()
-	print(result)
-		
+	itm_qty=result[0].quantity_received-result[result_count].refund_quantity
+	print(itm_qty)
 	
 	# if((result.count())!=2):
 	# 	itm_qty=result[0].quantity_received
