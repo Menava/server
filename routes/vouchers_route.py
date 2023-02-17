@@ -261,7 +261,7 @@ def getItemQty(id,option):
 	for result in results[1:]:
 		print('result',result)
 		result_qty=result.quantity_received-prev_qty
-		if(loop_count==result_count-1):
+		if(loop_count+1==result_count-1):
 			result_qty-=result.refund_quantity
 		result_price=result_qty*result.unit_price
 		total_qty+=result_qty
