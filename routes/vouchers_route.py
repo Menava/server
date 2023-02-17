@@ -253,16 +253,14 @@ def getItemQty(id,option):
 		result_count=db.session.query(Items_Purchase).filter(Items_Purchase.item_id==id).filter(Items_Purchase.purchase_date>getTodayDate() - getTimeWindow('month')).count()
 	if(option=='all'):
 		result_count=result_allcount
+		loop_count=1
 
 	results=db.session.query(Items_Purchase).filter(Items_Purchase.item_id==id).order_by(Items_Purchase.id.desc()).limit(result_count+1).all()
 	results.sort(key=sortResult)
 	prev_qty=results[0].refund_quantity
-	print('result count',result_count)
-	print('results',itemPurchases_schema.dump(results))
 	for result in results[1:]:
-		print('result',result)
 		result_qty=result.quantity_received-prev_qty
-		if(loop_count+1==result_count-1):
+		if(loop_count==result_count-1):
 			result_qty-=result.refund_quantity
 		result_price=result_qty*result.unit_price
 		total_qty+=result_qty
@@ -271,6 +269,7 @@ def getItemQty(id,option):
 		loop_count+=1
 
 	if(result_count==result_allcount):
+		tota
 		total_qty+=results[0].quantity_received
 		total_price+=results[0].quantity_received*results[0].unit_price
 
