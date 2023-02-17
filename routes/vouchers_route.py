@@ -258,6 +258,7 @@ def getItemQty(id,option):
 	results.sort(key=sortResult)
 	prev_qty=results[0].refund_quantity
 	print('result count',result_count)
+	print('results',itemPurchases_schema.dump(results))
 	for result in results[1:]:
 		print('result',result)
 		result_qty=result.quantity_received-prev_qty
