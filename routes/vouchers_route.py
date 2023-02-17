@@ -269,7 +269,6 @@ def getItemQty(id,option):
 		loop_count+=1
 
 	if(result_count==result_allcount):
-		tota
 		total_qty+=results[0].quantity_received
 		total_price+=results[0].quantity_received*results[0].unit_price
 
