@@ -259,6 +259,7 @@ def getItemQty(id,option):
 	prev_qty=results[0].refund_quantity
 	print('result count',result_count)
 	for result in results[1:]:
+		print('result',result)
 		result_qty=result.quantity_received-prev_qty
 		if(loop_count==result_count-1):
 			result_qty-=result.refund_quantity
