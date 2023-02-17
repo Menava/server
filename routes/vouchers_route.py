@@ -259,10 +259,13 @@ def getItemQty(id,option):
 	prev_qty=results[0].refund_quantity
 	for result in results[1:]:
 		result_qty=result.quantity_received-prev_qty
+		if(loop_count==result_count-1):
+			result_qty-=result.refund_quantity
 		result_price=result_qty*result.unit_price
 		total_qty+=result_qty
 		total_price+=result_price
 		prev_qty=result.refund_quantity
+		loop_count+=1
 
 	if(result_count==result_allcount):
 		total_qty+=results[0].quantity_received
